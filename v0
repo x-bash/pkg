@@ -3,7 +3,7 @@
 # author:       Li Junhao           l@x-cmd.com    edwinjhlee.github.io
 # maintainer:   Li Junhao
 
-xrc os
+xrc os/v0
 
 static_build_init(){
     local appname="${1:?Provide app name, like dust}"
