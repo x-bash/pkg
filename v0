@@ -1,0 +1,85 @@
+# shellcheck shell=sh disable=SC3043
+
+# author:       Li Junhao           l@x-cmd.com    edwinjhlee.github.io
+# maintainer:   Li Junhao
+
+xrc os
+
+static_build_init(){
+    local appname="${1:?Provide app name, like dust}"
+
+    if command -v "_${appname}_bin" 1>/dev/null; then
+        return 0
+    fi
+
+    local target="$HOME/.x-cmd/.bin/$appname"
+    mkdir -p "$target"
+
+    local arch
+    arch="$(os arch)"
+    local osname
+    osname="$(os name)"
+
+    local exe
+    case "$osname" in
+        win)    exe=$appname.x64.exe        ;;
+        *)      exe=$appname.${osname}.${arch}  ;;
+    esac
+
+    # Rely
+    if [ ! -f "$target/$exe" ]; then
+        # TODO: Use github, gitlab if gitee failed.
+        if ! CACHE="$target/$exe.7z" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z"; then
+            echo "Unsupported: $exe" >&2
+            return 1
+        fi
+
+        (
+            cd "$target" && {
+                local size
+
+                size=$(wc -c "$exe.7z")
+                size=${size% *}
+                size=$(printf "%s" $size)   # Notice: Intentionary let it unquoted.
+
+                xrc 7z
+                if [ "$size" -gt 20 ]; then
+                    _7z x "$exe.7z" 1>/dev/null 2>/dev/null
+                else
+                    size="$(cat "$exe.7z")"
+                    local i
+                    local suffix
+                    for i in $(seq "$size"); do
+                        suffix="$(printf "%03s" "$i")"
+                        CACHE="$exe.7z.$suffix" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z.$suffix" || {
+                            echo "Fail in $exe.7z.$suffix" >&2
+                            return 1
+                        }
+                    done
+                    _7z x "$exe.7z.001" 1>/dev/null 2>/dev/null
+                fi && chmod +x "$exe"
+            }
+        )
+    fi && eval "
+        _${appname}_bin() { $target/$exe \${1:+\"\$@\"}; }
+    "
+}
+
+static_build_run(){
+    local _appname="${1:?Provide app name, like dust}"
+    shift
+    static_build_init "$_appname" && \
+        "_${_appname}_bin" ${1:+"$@"}
+}
+
+static_build_xrc(){
+    local _appname="${1:?Provide app name, like dust}"
+    shift
+    static_build_init "$_appname" && {
+        eval "
+$_appname(){
+    _${_appname}_bin \${1:+\"\$@\"}
+}
+    "
+    }
+}
