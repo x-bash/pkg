@@ -42,9 +42,9 @@ static_build_init(){
                 size=${size% *}
                 size=$(printf "%s" $size)   # Notice: Intentionary let it unquoted.
 
-                xrc 7z
+                xrc p7z
                 if [ "$size" -gt 20 ]; then
-                    _7z x "$exe.7z" 1>/dev/null 2>/dev/null
+                    p7z x "$exe.7z" 1>/dev/null 2>/dev/null
                 else
                     size="$(cat "$exe.7z")"
                     local i
@@ -56,7 +56,7 @@ static_build_init(){
                             return 1
                         }
                     done
-                    _7z x "$exe.7z.001" 1>/dev/null 2>/dev/null
+                    p7z x "$exe.7z.001" 1>/dev/null 2>/dev/null
                 fi && chmod +x "$exe"
             }
         )
