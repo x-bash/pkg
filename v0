@@ -5,6 +5,25 @@
 
 xrc os/v0
 
+
+
+static_build_run(){
+    local _appname="${1:?Provide app name, like dust}"
+    local s=${_appname#*"|"_appname}
+
+    shift
+    static_build_init "$_appname" && \
+        "_${_appname}_bin" ${1:+"$@"}
+}
+
+static_build_run(){
+    :
+
+    # check in memory named list
+    # not included. included.
+    # 
+}
+
 static_build_init(){
     local appname="${1:?Provide app name, like dust}"
 
@@ -66,12 +85,7 @@ static_build_init(){
     "
 }
 
-static_build_run(){
-    local _appname="${1:?Provide app name, like dust}"
-    shift
-    static_build_init "$_appname" && \
-        "_${_appname}_bin" ${1:+"$@"}
-}
+
 
 static_build_xrc(){
     local _appname="${1:?Provide app name, like dust}"
