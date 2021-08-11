@@ -72,7 +72,7 @@ static_build_init(){
     local name="${1:?Provide app name, like p7z}"
     local namebin="${2:-${name}_bin}"
     local path
-    if ! path=$(_p7zr_which "$name"); then
+    if ! path=$(static_build_which "$name"); then
         return 1
     fi
     eval "
@@ -85,7 +85,7 @@ static_build_init(){
 
 static_build_run(){
     local path
-    if ! path=$(_p7zr_which "$name"); then
+    if ! path=$(static_build_which "$name"); then
         return 1
     fi
     $path "$@"
