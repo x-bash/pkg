@@ -110,10 +110,6 @@ static_build_run(){
         return 1
     fi
     $path "$@"
-
-    local _appname="${1:?Provide app name, like p7z}"
-    shift
-    static_build_init "$_appname" && "_${_appname}_bin" "$@"
 }
 
 
