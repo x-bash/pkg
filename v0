@@ -29,7 +29,7 @@ static_build_which(){
     # Rely
     if [ ! -f "$target/$exe" ]; then
         # TODO: Use github, gitlab if gitee failed.
-        if ! CACHE="$target/$exe.7z" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z"; then
+        if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${appname}" "bin/$exe.7z"; then
             printf "%s\n" "Unsupported: $exe" >&2
             return 1
         fi
@@ -49,10 +49,12 @@ static_build_which(){
                     size="$(cat "$exe.7z")"
                     local i
                     local suffix
+
+                    # TODO: using job for concurrency.
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
-                        CACHE="$exe.7z.$suffix" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z.$suffix" || {
+                        CACHE="$exe.7z.$suffix" _xrc_curl_gitx static-build "${appname}" "bin/$exe.7z.$suffix" || {
                             echo "Fail in $exe.7z.$suffix" >&2
                             return 1
                         }
