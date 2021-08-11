@@ -5,6 +5,8 @@
 
 xrc os/v0
 
+xrc log init static_build
+
 static_build_which(){
     local appname="${1:?Provide app name, like dust}"
 
@@ -59,6 +61,8 @@ static_build_which(){
                             return 1
                         }
                     done
+
+                    static_build "Unzip"
                     p7zr x "$exe.7z.001" 1>/dev/null 2>/dev/null
                 fi && chmod +x "$exe"
             }
@@ -70,7 +74,7 @@ static_build_which(){
 
 static_build_init(){
     local name="${1:?Provide app name, like p7z}"
-    local namebin="${2:-${name}_bin}"
+    local namebin="${2:-_${name}_bin}"
     local path
     if ! path=$(static_build_which "$name"); then
         return 1
