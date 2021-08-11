@@ -27,7 +27,6 @@ static_build_which(){
 
     # Rely
     if [ ! -f "$target/$exe" ]; then
-        # TODO: Use github, gitlab if gitee failed.
         if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z"; then
             printf "%s\n" "Unsupported: $exe" >&2
             return 1
