@@ -30,7 +30,7 @@ static_build_which(){
     if [ ! -f "$target/$exe" ]; then
         # TODO: Use github, gitlab if gitee failed.
         if ! CACHE="$target/$exe.7z" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z"; then
-            echo "Unsupported: $exe" >&2
+            printf "%s\n" "Unsupported: $exe" >&2
             return 1
         fi
 
