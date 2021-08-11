@@ -75,7 +75,7 @@ static_build_init(){
     fi
     eval "
         $namebin(){
-            $path "$@" 
+            $path \"\$@\" 
         }
     "
     # \${1:+\"\$@\"}
