@@ -5,7 +5,7 @@
 
 xrc os/v0
 
-static_build_init(){
+static_build_which(){
     local appname="${1:?Provide app name, like dust}"
 
     if command -v "_${appname}_bin" 1>/dev/null; then
@@ -61,20 +61,35 @@ static_build_init(){
                 fi && chmod +x "$exe"
             }
         )
-    fi && eval "
-        _${appname}_bin() { $target/$exe \${1:+\"\$@\"}; }
+    fi && printf "%s" "$target/$exe" && return 0
+
+    return 1
+
+    # && eval "
+    #     _${appname}_bin() { $target/$exe \${1:+\"\$@\"}; }
+    # "
+}
+
+static_build_init(){
+    local name="${1:?Provide app name, like p7z}"
+    local path
+    path=$(_p7zr_which "$name")
+    eval "
+        $name(){
+            $path \${1:+\"\$@\"}
+        }
     "
 }
 
 static_build_run(){
-    local _appname="${1:?Provide app name, like dust}"
+    local _appname="${1:?Provide app name, like p7z}"
     shift
     static_build_init "$_appname" && \
         "_${_appname}_bin" ${1:+"$@"}
 }
 
 static_build_xrc(){
-    local _appname="${1:?Provide app name, like dust}"
+    local _appname="${1:?Provide app name, like p7z}"
     shift
     static_build_init "$_appname" && {
         eval "
