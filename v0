@@ -62,7 +62,7 @@ static_build_which(){
                         }
                     done
 
-                    static_build "Unzip"
+                    static_build_log "Using p7zr to decompress: $target/$exe.7z.001"
                     p7zr x "$exe.7z.001" 1>/dev/null 2>/dev/null
                 fi && chmod +x "$exe"
             }
