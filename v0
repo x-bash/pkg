@@ -8,13 +8,10 @@ xrc os/v0
 xrc log init static_build
 
 static_build_which(){
-    local appname="${1:?Provide app name, like dust}"
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-${repo}}"
 
-    if command -v "_${appname}_bin" 1>/dev/null; then
-        return 0
-    fi
-
-    local target="$HOME/.x-cmd/.bin/$appname"
+    local target="$HOME/.x-cmd/.bin/$app"
     mkdir -p "$target"
 
     local arch
@@ -24,14 +21,14 @@ static_build_which(){
 
     local exe
     case "$osname" in
-        win)    exe=$appname.x64.exe        ;;
-        *)      exe=$appname.${osname}.${arch}  ;;
+        win)    exe=$app.x64.exe        ;;
+        *)      exe=$app.${osname}.${arch}  ;;
     esac
 
     # Rely
     if [ ! -f "$target/$exe" ]; then
         # TODO: Use github, gitlab if gitee failed.
-        if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${appname}/bin/$exe.7z"; then
+        if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z"; then
             printf "%s\n" "Unsupported: $exe" >&2
             return 1
         fi
@@ -56,7 +53,7 @@ static_build_which(){
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
-                        CACHE="$exe.7z.$suffix" _xrc_curl_gitx static-build "${appname}/bin/$exe.7z.$suffix" || {
+                        CACHE="$exe.7z.$suffix" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z.$suffix" || {
                             echo "Fail in $exe.7z.$suffix" >&2
                             return 1
                         }
@@ -73,10 +70,16 @@ static_build_which(){
 }
 
 static_build_init(){
-    local name="${1:?Provide app name, like p7z}"
-    local namebin="${2:-_${name}_bin}"
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-${repo}}"
+    local namebin="${3:-_${app}_bin}"
+
+    # if command -v "_${appname}_bin" 1>/dev/null; then
+    #     return 0
+    # fi
+
     local path
-    if ! path=$(static_build_which "$name"); then
+    if ! path=$(static_build_which "$repo" "$app"); then
         return 1
     fi
     eval "
@@ -87,9 +90,13 @@ static_build_init(){
     # \${1:+\"\$@\"}
 }
 
+# TODO: Cache static_build_which
 static_build_run(){
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:?Provide app name, like 7za}"
+
     local path
-    if ! path=$(static_build_which "$name"); then
+    if ! path=$(static_build_which "$repo" "$app"); then
         return 1
     fi
     $path "$@"
@@ -97,6 +104,8 @@ static_build_run(){
 
 
 static_build_xrc(){
-    local _appname="${1:?Provide app name, like p7z}"
-    static_build_init "$_appname"
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-$repo}"
+
+    static_build_init "$repo" "$app"
 }
