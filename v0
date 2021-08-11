@@ -51,13 +51,13 @@ static_build_init(){
                     local suffix
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
-                        suffix="$(printf "%3s" "$i" | tr " " 0)" 
+                        suffix="$(printf "%3s" "$i" | tr " " 0)"
                         CACHE="$exe.7z.$suffix" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z.$suffix" || {
                             echo "Fail in $exe.7z.$suffix" >&2
                             return 1
                         }
                     done
-                    p7z x "$exe.7z.001" 1>/dev/null 2>/dev/null
+                    p7zr x "$exe.7z.001" 1>/dev/null 2>/dev/null
                 fi && chmod +x "$exe"
             }
         )
