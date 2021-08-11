@@ -64,18 +64,17 @@ static_build_which(){
     fi && printf "%s" "$target/$exe" && return 0
 
     return 1
-
-    # && eval "
-    #     _${appname}_bin() { $target/$exe \${1:+\"\$@\"}; }
-    # "
 }
 
 static_build_init(){
     local name="${1:?Provide app name, like p7z}"
+    local namebin="${2:-${name}_bin}"
     local path
-    path=$(_p7zr_which "$name")
+    if ! path=$(_p7zr_which "$name"); then
+        return 1
+    fi
     eval "
-        $name(){
+        $namebin(){
             $path \${1:+\"\$@\"}
         }
     "
