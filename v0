@@ -8,6 +8,7 @@ xrc os/v0
 xrc log init static_build
 
 static_build_which(){
+    local IFS
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:-${repo}}"
 
