@@ -30,7 +30,6 @@ static_build_which(){
 
         static_build_log info "Downloading: ${repo}/bin/$exe.7z"
         if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z"; then
-            printf "%s\n" "Unsupported: $exe" >&2
             static_build_log info "File Not Found. Perhaps the platform is NOT supported: $exe"
             return 1
         fi
