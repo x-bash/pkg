@@ -5,33 +5,14 @@
 
 xrc os/v0
 
+xrc log init static_build
 
+static_build_which(){
+    local IFS
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-${repo}}"
 
-static_build_run(){
-    local _appname="${1:?Provide app name, like dust}"
-    local s=${_appname#*"|"_appname}
-
-    shift
-    static_build_init "$_appname" && \
-        "_${_appname}_bin" ${1:+"$@"}
-}
-
-static_build_run(){
-    :
-
-    # check in memory named list
-    # not included. included.
-    # 
-}
-
-static_build_init(){
-    local appname="${1:?Provide app name, like dust}"
-
-    if command -v "_${appname}_bin" 1>/dev/null; then
-        return 0
-    fi
-
-    local target="$HOME/.x-cmd/.bin/$appname"
+    local target="$HOME/.x-cmd/.bin/$app"
     mkdir -p "$target"
 
     local arch
@@ -41,15 +22,16 @@ static_build_init(){
 
     local exe
     case "$osname" in
-        win)    exe=$appname.x64.exe        ;;
-        *)      exe=$appname.${osname}.${arch}  ;;
+        win)    exe=$app.x64.exe        ;;
+        *)      exe=$app.${osname}.${arch}  ;;
     esac
 
     # Rely
     if [ ! -f "$target/$exe" ]; then
-        # TODO: Use github, gitlab if gitee failed.
-        if ! CACHE="$target/$exe.7z" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z"; then
-            echo "Unsupported: $exe" >&2
+
+        static_build_log info "Downloading: ${repo}/bin/$exe.7z"
+        if ! CACHE="$target/$exe.7z" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z"; then
+            static_build_log info "File Not Found. Perhaps the platform is NOT supported: $exe"
             return 1
         fi
 
@@ -61,40 +43,72 @@ static_build_init(){
                 size=${size% *}
                 size=$(printf "%s" $size)   # Notice: Intentionary let it unquoted.
 
-                xrc p7z
+                xrc p7zr
                 if [ "$size" -gt 20 ]; then
-                    p7z x "$exe.7z" 1>/dev/null 2>/dev/null
+                    p7zr x "$exe.7z" 1>/dev/null 2>/dev/null
                 else
                     size="$(cat "$exe.7z")"
                     local i
                     local suffix
+
+                    # TODO: using job for concurrency.
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
-                        suffix="$(printf "%3s" "$i" | tr " " 0)" 
-                        CACHE="$exe.7z.$suffix" xrc_curl "https://gitee.com/static-build/${appname}/raw/master/bin/$exe.7z.$suffix" || {
-                            echo "Fail in $exe.7z.$suffix" >&2
+                        suffix="$(printf "%3s" "$i" | tr " " 0)"
+                        CACHE="$exe.7z.$suffix" _xrc_curl_gitx static-build "${repo}/bin/$exe.7z.$suffix" || {
+                            static_build_log info "Download failure in $exe.7z.$suffix" >&2
                             return 1
                         }
                     done
-                    p7z x "$exe.7z.001" 1>/dev/null 2>/dev/null
-                fi && chmod +x "$exe"
+
+                    static_build_log info "Using p7zr to decompress: $target/$exe.7z.001"
+                    p7zr x "$exe.7z.001" 1>/dev/null 2>/dev/null
+                fi && chmod +x "$exe" \
+                    && static_build_log info "Finish file decompress and chmod."
             }
         )
-    fi && eval "
-        _${appname}_bin() { $target/$exe \${1:+\"\$@\"}; }
-    "
+    fi && printf "%s" "$target/$exe" && return 0
+
+    return 1
 }
 
+static_build_init(){
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-${repo}}"
+    local namebin="${3:-_${app}_bin}"
+
+    # if command -v "_${appname}_bin" 1>/dev/null; then
+    #     return 0
+    # fi
+
+    local path
+    if ! path=$(static_build_which "$repo" "$app"); then
+        return 1
+    fi
+    eval "
+        $namebin(){
+            $path \"\$@\" 
+        }
+    "
+    # \${1:+\"\$@\"}
+}
+
+# TODO: Cache static_build_which
+static_build_run(){
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:?Provide app name, like 7za}"
+
+    local path
+    if ! path=$(static_build_which "$repo" "$app"); then
+        return 1
+    fi
+    $path "$@"
+}
 
 
 static_build_xrc(){
-    local _appname="${1:?Provide app name, like dust}"
-    shift
-    static_build_init "$_appname" && {
-        eval "
-$_appname(){
-    _${_appname}_bin \${1:+\"\$@\"}
-}
-    "
-    }
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-$repo}"
+
+    static_build_init "$repo" "$app"
 }
