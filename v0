@@ -41,7 +41,7 @@ static_build_which(){
 
                 size=$(wc -c "$exe.7z")
                 size=${size% *}
-                size=$(printf "%s" $size)   # Notice: Intentionary let it unquoted.
+                size=$(printf "%s" "$size")   # Notice: Intentionary let it unquoted.
 
                 xrc p7zr
                 if [ "$size" -gt 20 ]; then
