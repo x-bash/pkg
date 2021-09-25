@@ -81,13 +81,13 @@ static_build_init(){
     #     return 0
     # fi
 
-    local path
-    if ! path=$(static_build_which "$repo" "$app"); then
+    local exec_path
+    if ! exec_path=$(static_build_which "$repo" "$app"); then
         return 1
     fi
     eval "
         $namebin(){
-            $path \"\$@\" 
+            $exec_path \"\$@\" 
         }
     "
     # \${1:+\"\$@\"}
@@ -98,11 +98,11 @@ static_build_run(){
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:?Provide app name, like 7za}"
 
-    local path
-    if ! path=$(static_build_which "$repo" "$app"); then
+    local exec_path
+    if ! exec_path=$(static_build_which "$repo" "$app"); then
         return 1
     fi
-    $path "$@"
+    $exec_path "$@"
 }
 
 
