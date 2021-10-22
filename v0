@@ -5,7 +5,7 @@
 
 xrc os/v0
 
-xrc log init static_build
+x log init static_build
 
 static_build_which(){
     local IFS
