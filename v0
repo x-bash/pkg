@@ -19,13 +19,14 @@ static_build_which(){
     arch="$(os arch)"
     local osname
     osname="$(os name)"
+    local release
+    release="$(uname -r)"
 
     local exe
-    case "$osname" in
-        win)    exe=$app.x64.exe        ;;
+    case "$osname-$release" in
+        *win* | *WSL*)    exe=$app.x64.exe        ;;
         *)      exe=$app.${osname}.${arch}  ;;
     esac
-
     # Rely
     if [ ! -f "$target/$exe" ]; then
 
