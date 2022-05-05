@@ -92,7 +92,7 @@ ___x_cmd_pkg___which_p7zip(){
         pkg:info "Deflate the all.7z"
         x rmrf "$___X_CMD_PKG_RAWPATH"
         ___x_cmd_ensuredir "$___X_CMD_PKG_RAWPATH"
-        cd ${p7zip%/*} && cp all.7z raw/all.7z && cd raw && x uz all.7z 2>/dev/null && rm all.7z
+        cd "${p7zip%/*}" && cp all.7z raw/all.7z && cd raw && x uz all.7z 2>/dev/null && rm all.7z
     )
 }
 
@@ -100,7 +100,7 @@ ___x_cmd_pkg___which_p7zip(){
 ___x_cmd_pkg_ls()(
     ___x_cmd_pkg___which_p7zip || return
 
-    cd "$___X_CMD_PKG_RAWPATH"
+    cd "$___X_CMD_PKG_RAWPATH" || return
     find . -name meta.tt.json | awk  '{ gsub(/\.\//, "", $0); gsub(/\/meta.tt.json$/, "", $0); print $0;  }'
 )
 # EndSection
