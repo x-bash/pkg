@@ -10,7 +10,20 @@ xrc:mod:lib pkg     util
 ___x_cmd_pkg(){
     local op="$1"
     case "$op" in
-        ls)     shift; ___x_cmd_pkg_ls "$@" ;;
+        ls)             shift; ___x_cmd_pkg_ls "$@" ;;
+        update)         shift; ___x_cmd_pkg_update "$@" ;;
+
+        version)        shift; ___x_cmd_pkg_version "$@" ;;
+
+        # x pkg which python=3.12
+        which)          shift; ___x_cmd_pkg_which "$@" ;;
+
+        # x pkg download python=3.12
+        download)       shift; ___x_cmd_pkg_download "$@" ;;
+
+        # x pkg exec python=
+        exec)           shift; ___x_cmd_pkg_exec "$@" ;;
+        *=)             ___x_cmd_pkg_exec "$@" ;;
     esac
 }
 
