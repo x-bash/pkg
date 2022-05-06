@@ -1,4 +1,5 @@
 
+___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
 
 # Section: get from all.7z
 ___x_cmd_pkg___which_p7zip(){
