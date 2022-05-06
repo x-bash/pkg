@@ -1,10 +1,12 @@
 
 x log init pkg
 
+xrc:mod:lib pkg     util
+
 ___x_cmd_pkg(){
     local op="$1"
     case "$op" in
-        ls)     ___x_cmd_pkg_ls "$@" ;;
+        ls)     shift; ___x_cmd_pkg_ls "$@" ;;
     esac
 }
 
