@@ -21,7 +21,7 @@ ___x_cmd_pkg(){
         # x pkg download node=v12
         download)       shift; ___x_cmd_pkg_download "$@" ;;
 
-        # x pkg download node=v12
+        # x pkg use node=v12
         use)            shift; ___x_cmd_pkg_use "$@" ;;
 
         # x pkg exec python=
