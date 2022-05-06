@@ -15,11 +15,14 @@ ___x_cmd_pkg(){
 
         version)        shift; ___x_cmd_pkg_version "$@" ;;
 
-        # x pkg which python=3.12
+        # x pkg which node=v12
         which)          shift; ___x_cmd_pkg_which "$@" ;;
 
-        # x pkg download python=3.12
+        # x pkg download node=v12
         download)       shift; ___x_cmd_pkg_download "$@" ;;
+
+        # x pkg download node=v12
+        use)            shift; ___x_cmd_pkg_use "$@" ;;
 
         # x pkg exec python=
         exec)           shift; ___x_cmd_pkg_exec "$@" ;;
