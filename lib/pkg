@@ -30,8 +30,8 @@ ___x_cmd_pkg___bin_url(){
     url_list="$(___x_cmd_pkg___all_info "${pkg_name}" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "pkg.jobj.awk" \
-        -f "pkg.lsversion.awk")"
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.lsversion.awk")"
 
     local url
     while read -r url; do
@@ -48,8 +48,8 @@ ___x_cmd_pkg___ls_local(){
     ___x_cmd_pkg___all_info "${pkg_name}" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "pkg.jobj.awk" \
-        -f "pkg.lsversion.awk"
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.lsversion.awk"
 }
 
 # Control the lsversion awk for better showing
@@ -59,8 +59,8 @@ ___x_cmd_pkg___ls_version(){
     ___x_cmd_pkg___all_info "${pkg_name}" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "pkg.jobj.awk" \
-        -f "pkg.lsversion.awk"
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.lsversion.awk"
 }
 
 ___x_cmd_pkg___awk(){
@@ -72,8 +72,8 @@ ___x_cmd_pkg___awk(){
     ___x_cmd_pkg___all_info "${FP:-nmap}" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "pkg.jobj.awk" \
-        -f "pkg.url.awk"
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.url.awk"
 }
 
 # Section: get from all.7z
