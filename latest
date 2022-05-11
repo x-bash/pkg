@@ -27,8 +27,10 @@ ___x_cmd_pkg(){
         # x pkg use node=v12
         try)            shift; ___x_cmd_pkg_try "$@" ;;
 
+        # Get bin list
+        bin)            shift; ___x_cmd_pkg_bin "$@" ;;
+
         # x pkg exec python=
-        exec)           shift; ___x_cmd_pkg_exec "$@" ;;
         *=)             ___x_cmd_pkg_exec "$@" ;;
     esac
 }
