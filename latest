@@ -27,7 +27,8 @@ ___x_cmd_pkg(){
         # x pkg use node=v12
         try)            shift; ___x_cmd_pkg_try "$@" ;;
 
-        # Get bin list
+        # Get bin list if zero argument
+        # Display path if arguments provided
         bin)            shift; ___x_cmd_pkg_bin "$@" ;;
 
         # x pkg exec python=
