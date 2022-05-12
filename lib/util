@@ -31,8 +31,6 @@ ___x_cmd_pkg_ls()(
 # EndSection
 
 
-
-
 # Section: get raw text from all.7z
 ___x_cmd_pkg_locate(){
     local tgt="${1:?Provide name}"
