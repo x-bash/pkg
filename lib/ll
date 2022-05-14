@@ -1,6 +1,6 @@
 
 # Provide infomation for specific pkg and version
-___x_cmd_pkg_info()(
+___x_cmd_pkg_ll()(
     ___x_cmd_pkg___which_p7zip || return
 
     cd "$___X_CMD_PKG_RAWPATH" || return
