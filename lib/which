@@ -1,7 +1,4 @@
 
-___x_cmd_pkg_update(){
-    ___x_cmd_pkg___which_p7zip -  # Force Update
-}
 
 ___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
 

@@ -19,9 +19,5 @@ ___x_cmd_pkg_install(){
     ___x_cmd_pkg_install___install  "$@"
 }
 
-___x_cmd_pkg_setup(){
-    :
-    # get setup script
-    # eval setup script
-}
+
 

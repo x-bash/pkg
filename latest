@@ -5,7 +5,7 @@ x log init pkg
 
 xrc:mod pkg/lib/sb
 
-xrc:mod:lib pkg     which util main info ls ls_installed
+xrc:mod:lib pkg     which util main info ls ls_installed install
 
 ___x_cmd_pkg(){
     local op="$1"
