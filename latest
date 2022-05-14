@@ -14,7 +14,7 @@ ___x_cmd_pkg(){
         update)         shift; ___x_cmd_pkg_update "$@" ;;
 
         version)        shift; ___x_cmd_pkg_version "$@" ;;
-        info)           shift; ___x_cmd_pkg_info "$@" ;;
+        ll)             shift; ___x_cmd_pkg_info "$@" ;;
 
         # x pkg which node=v12
         which)          shift; ___x_cmd_pkg_which "$@" ;;
