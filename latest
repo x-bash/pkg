@@ -21,6 +21,7 @@ ___x_cmd_pkg(){
 
         # x pkg download node=v12
         install)        shift; ___x_cmd_pkg_install "$@" ;;
+        reinstall)      shift; ___x_cmd_pkg_reinstall "$@" ;;
 
         # x pkg setup node=v12
         setup)          shift; ___x_cmd_pkg_setup "$@" ;;

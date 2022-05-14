@@ -19,5 +19,7 @@ ___x_cmd_pkg_install(){
     ___x_cmd_pkg_install___install  "$@"
 }
 
-
+___x_cmd_pkg_reinstall(){
+    :
+}
 
