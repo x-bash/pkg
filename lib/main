@@ -71,19 +71,10 @@ ___x_cmd_pkg_install(){
     ___x_cmd_pkg_install___install  "$@"
 }
 
-___x_cmd_pkg_use(){
-    ___x_cmd_pkg_try "$@"
-    # set in the config
-}
-
-___x_cmd_pkg_try(){
+___x_cmd_pkg_setup(){
     :
-}
-
-# default bin
-# What if x pkg exec java=1.8 jconsole -- Only use default bin
-___x_cmd_pkg_exec(){
-    :
+    # get setup script
+    # eval setup script
 }
 
 ___x_cmd_pkg___awk(){
