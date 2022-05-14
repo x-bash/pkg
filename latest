@@ -19,7 +19,7 @@ ___x_cmd_pkg(){
         which)          shift; ___x_cmd_pkg_which "$@" ;;
 
         # x pkg download node=v12
-        download)       shift; ___x_cmd_pkg_download "$@" ;;
+        install)        shift; ___x_cmd_pkg_install "$@" ;;
 
         # x pkg use node=v12
         use)            shift; ___x_cmd_pkg_use "$@" ;;
@@ -30,6 +30,9 @@ ___x_cmd_pkg(){
         # Get bin list if zero argument
         # Display path if arguments provided
         bin)            shift; ___x_cmd_pkg_bin "$@" ;;
+
+
+
 
         # x pkg exec python=
         *=)             ___x_cmd_pkg_exec "$@" ;;
