@@ -5,7 +5,7 @@ x log init pkg
 
 xrc:mod pkg/lib/sb
 
-xrc:mod:lib pkg     util main
+xrc:mod:lib pkg     update_which util main info ls
 
 ___x_cmd_pkg(){
     local op="$1"
@@ -14,6 +14,7 @@ ___x_cmd_pkg(){
         update)         shift; ___x_cmd_pkg_update "$@" ;;
 
         version)        shift; ___x_cmd_pkg_version "$@" ;;
+        info)           shift; ___x_cmd_pkg_info "$@" ;;
 
         # x pkg which node=v12
         which)          shift; ___x_cmd_pkg_which "$@" ;;
@@ -23,10 +24,6 @@ ___x_cmd_pkg(){
 
         # x pkg setup node=v12
         setup)          shift; ___x_cmd_pkg_setup "$@" ;;
-
-        # Get bin list if zero argument
-        # Display path if arguments provided
-        bin)            shift; ___x_cmd_pkg_bin "$@" ;;
 
         # x pkg exec python=
         *=)             ___x_cmd_pkg_exec "$@" ;;

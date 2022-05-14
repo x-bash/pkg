@@ -6,6 +6,9 @@ ___x_cmd_pkg_post_script(){
     local version="${3:?rovide version}"
 }
 
+
+# Get bin list if zero argument
+# Display path if arguments provided
 # _bin_url__
 # _bin_url_cn
 ___x_cmd_pkg___bin_url(){
