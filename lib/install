@@ -11,6 +11,8 @@ ___x_cmd_pkg_install___unzip(){
 
 ___x_cmd_pkg_install___install(){
     :
+    # get install script
+    # eval install script
 }
 
 ___x_cmd_pkg_install(){
