@@ -1,0 +1,27 @@
+
+___x_cmd_pkg_install___download(){
+    # get bin url
+    # download from url
+    :
+}
+
+___x_cmd_pkg_install___unzip(){
+    :
+}
+
+___x_cmd_pkg_install___install(){
+    :
+}
+
+___x_cmd_pkg_install(){
+    ___x_cmd_pkg_install___download "$@" || return
+    ___x_cmd_pkg_install___unzip    "$@" || return
+    ___x_cmd_pkg_install___install  "$@"
+}
+
+___x_cmd_pkg_setup(){
+    :
+    # get setup script
+    # eval setup script
+}
+
