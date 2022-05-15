@@ -1,8 +1,9 @@
 
 ___x_cmd_pkg_install(){
     ___x_cmd_pkg_install___download "$@" || return
-    if script="$(___x_cmd_pkg___get_script "$@" install)"; then
-        eval "$script"
+    local script_path
+    if script_path="$(___x_cmd_pkg___get_script_path "$@" install)"; then
+        . "$script_path"
     else
         ___x_cmd_pkg_install___unzip    "$@" || return
     fi
@@ -13,11 +14,6 @@ ___x_cmd_pkg_reinstall(){
     # Delete the installation. Re unpack or running the installation script ?
 }
 
-
-___x_cmd_pkg_install___get_install_script(){
-    : get the install script
-
-}
 
 # This is default
 ___x_cmd_pkg_install___unzip(){

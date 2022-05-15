@@ -5,16 +5,10 @@ ___x_cmd_pkg_setup(){
 }
 
 ___x_cmd_pkg_setup___min(){
-    :
-    if script="$(___x_cmd_pkg___get_script "$@" setup)"; then
-        # eval setup script
-        eval "$script"
+    local script_path
+    if script_path="$(___x_cmd_pkg___get_script "$@" setup)"; then
+        . "$script_path"
     else
         :
     fi
-}
-
-___x_cmd_pkg_install___get_setup_script(){
-    : get the install script
-
 }
