@@ -1,7 +1,7 @@
 
 ___x_cmd_pkg_install(){
     ___x_cmd_pkg_install___download "$@" || return
-    if script="$(___x_cmd_pkg_install___get_install_script)"; then
+    if script="$(___x_cmd_pkg___get_script "$@" install)"; then
         eval "$script"
     else
         ___x_cmd_pkg_install___unzip    "$@" || return
