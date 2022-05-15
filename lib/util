@@ -119,8 +119,6 @@ A
 
 }
 
-
-
 ___x_cmd_pkg___awk(){
     # ___x_cmd_pkg___all_info "${FP:-nmap}" | awk \
     #     -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
