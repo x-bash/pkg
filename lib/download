@@ -1,6 +1,7 @@
 
 # TODO: Multiple thread
 # TODO: Download Manager and more strategy
+# TODO: Maybe using a P2P share connection for mirror downloading.
 
 ___x_cmd_pkg_download(){
     local pkg_name="${1:?Provide pkg name}"
