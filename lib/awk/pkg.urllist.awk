@@ -1,12 +1,11 @@
 
 
 END {
-    result = jobj[ prefix, k, jqu(script) ]
-    if (result == "") {
-        exit(1)
-    } else {
-        print PKG_RAWPATH "/" PKG_NAME "/" VERSION_REALNAME "/.x-cmd/" juq(result)
-        exit(0)
+    prefix = jqu("VERSION") SUBSEP jqu("url") SUBSEP jqu( NET_REGION )
+
+    l = jobj[ prefix L ]
+    for (i=1; i<=l; ++i) {
+        print juq( jobj[ prefix, i ])
     }
 }
 
