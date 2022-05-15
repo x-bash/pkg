@@ -1,7 +1,5 @@
 
 END {
-    VERSION_REALNAME = jobj[ prefix, k, jqu("version") ]
-
     result = jobj[ prefix, k, jqu(script) ]
     if (result == "") {
         exit(1)
