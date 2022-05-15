@@ -10,6 +10,7 @@ ___x_cmd_pkg_install(){
 
 ___x_cmd_pkg_reinstall(){
     :
+    # Delete the installation. Re Unzip?
 }
 
 
