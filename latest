@@ -1,24 +1,6 @@
 # Author:       Li Junhao           l@x-cmd.com
 # shellcheck    shell=sh            disable=SC3043      # xrc
 
-x log init pkg
-
-xrc:mod pkg/lib/sb
-
-xrc:mod:lib pkg     which util ls ls_installed download install
-
-___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
-
-___X_CMD_PKG_DOWNLOAD_PATH="$___X_CMD_ROOT_TMP/pkg/download"
-___X_CMD_PKG_INSTALL_PATH="$___X_CMD_ROOT_TMP/pkg/installed"
-
-x ensuredir "$___X_CMD_PKG_RAWPATH" "$___X_CMD_PKG_DOWNLOAD_PATH" "$___X_CMD_PKG_INSTALL_PATH"
-
-# x defineddir \
-#     ___X_CMD_PKG_RAWPATH        "$___X_CMD_ROOT_TMP/pkg/raw" \
-#     ___X_CMD_PKG_DOWNLOAD_PATH  "$___X_CMD_ROOT_TMP/pkg/download" \
-#     ___X_CMD_PKG_INSTALL_PATH   "$___X_CMD_ROOT_TMP/pkg/installed"
-
 ___x_cmd_pkg(){
     local op="$1"
     case "$op" in
@@ -43,6 +25,23 @@ ___x_cmd_pkg(){
         *=)             ___x_cmd_pkg_exec "$@" ;;
     esac
 }
+
+
+x log init pkg
+
+xrc:mod pkg/lib/sb
+xrc:mod:lib pkg     which util ls ls_installed download install
+
+___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
+___X_CMD_PKG_DOWNLOAD_PATH="$___X_CMD_ROOT_TMP/pkg/download"
+___X_CMD_PKG_INSTALL_PATH="$___X_CMD_ROOT_TMP/pkg/installed"
+
+x ensuredir "$___X_CMD_PKG_RAWPATH" "$___X_CMD_PKG_DOWNLOAD_PATH" "$___X_CMD_PKG_INSTALL_PATH"
+
+# x defineddir \
+#     ___X_CMD_PKG_RAWPATH        "$___X_CMD_ROOT_TMP/pkg/raw" \
+#     ___X_CMD_PKG_DOWNLOAD_PATH  "$___X_CMD_ROOT_TMP/pkg/download" \
+#     ___X_CMD_PKG_INSTALL_PATH   "$___X_CMD_ROOT_TMP/pkg/installed"
 
 
 ___x_cmd_pkg_update(){
