@@ -6,6 +6,15 @@ ___x_cmd_pkg_setup(){
 
 ___x_cmd_pkg_setup___min(){
     :
-    # get setup script
-    # eval setup script
+    if script="$(___x_cmd_pkg_install___get_setup_script)"; then
+        # eval setup script
+        eval "$script"
+    else
+        :
+    fi
+}
+
+___x_cmd_pkg_install___get_setup_script(){
+    : get the install script
+
 }
