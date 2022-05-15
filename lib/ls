@@ -6,3 +6,19 @@ ___x_cmd_pkg_ls()(
     cd "$___X_CMD_PKG_RAWPATH" || return
     find . -name meta.tt.json | awk  '{ gsub(/\.\//, "", $0); gsub(/\/meta.tt.json$/, "", $0); print $0;  }'
 )
+
+
+# Those folder without _tmp is success
+___x_cmd_pkg_ls_installed(){
+    local pkg_name="${1:?Provide pkg name}"
+    local osarch="${2:?osarch as filter}"
+    ___x_cmd_pkg___all_info "${pkg_name}" | awk \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.lsversion.awk"
+}
+
+
+
+

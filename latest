@@ -7,6 +7,8 @@ xrc:mod pkg/lib/sb
 
 xrc:mod:lib pkg     which util main info ls ls_installed install
 
+___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
+
 ___x_cmd_pkg(){
     local op="$1"
     case "$op" in
