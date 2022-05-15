@@ -1,4 +1,11 @@
 
+___x_cmd_pkg_osarch(){
+    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
+        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
+    fi
+    printf "%s\n" "$___X_CMD_PKG_OSARCH"
+}
+
 # Section: get raw text from all.7z
 ___x_cmd_pkg_locate(){
     local tgt="${1:?Provide name}"
@@ -34,40 +41,15 @@ ___x_cmd_pkg___get_script_path(){
     local script="${4:?provide script name}"
 
     ___x_cmd_pkg___all_info "${pkg_name}" | awk \
-        -v osarch="$osarch" \
-        -v version="$version" \
-        -v script="$script" \
+        -v PKG_RAWPATH="$___X_CMD_PKG_RAWPATH" \
+        -v PKG_NAME="$pkg_name" -v VERSION_NAME="$version" -v OSARcH="$osarch" \
+        -v QUERY="$script" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "awk/pkg.jobj.awk" \
-        -f "awk/pkg.get_script.awk"
+        -f "awk/pkg.script.awk"
 }
 
-___x_cmd_pkg_osarch(){
-    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
-        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
-    fi
-    printf "%s\n" "$___X_CMD_PKG_OSARCH"
-}
-
-
-# Get bin list if zero argument
-# Display path if arguments provided
-# _bin_url__
-# _bin_url_cn
-___x_cmd_pkg___bin_url_list(){
-    local pkg_name="${1:?Provide pkg name}"
-    local version="${2:?rovide version}"
-    local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
-
-    ___x_cmd_pkg___all_info "${pkg_name}" | awk \
-        -v osarch="$osarch" \
-        -v version="$version" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/pkg.jobj.awk" \
-        -f "awk/pkg.lsversion.awk"
-}
 
 ___x_cmd_pkg___awk(){
     # ___x_cmd_pkg___all_info "${FP:-nmap}" | awk \
