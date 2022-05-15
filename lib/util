@@ -1,9 +1,13 @@
 
-___x_cmd_pkg_osarch(){
-    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
-        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
-    fi
-    printf "%s\n" "$___X_CMD_PKG_OSARCH"
+___x_cmd_pkg___get_script_path(){
+    local script="${4:?Provide sciprt}"
+
+    ___x_cmd_pkg___all_info "$@" | awk \
+        -v script="$script" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg.script.awk"
 }
 
 # Section: get raw text from all.7z
@@ -26,30 +30,19 @@ ___x_cmd_pkg___version_fp(){
 
 # Default, China
 ___x_cmd_pkg___all_info(){
-    local s
-    s="$___X_CMD_PKG_RAWPATH/$(___x_cmd_pkg_locate "${1:?Provide name}")" || return
-    printf "%s\n" "$1"
-    cat "$s/meta.tt.json" "$s/version.tt.json"
+    local pkg_name="${1:?Provide pkg name}"
+    local version="${2:?rovide version}"
+    local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
+
+    pkg_name="$(___x_cmd_pkg_locate "${1:?Provide name}")" || return
+
+    printf "%s\n%s\n%s\n%s\n" "$pkg_name" "$version" "$osarch" "$___X_CMD_PKG_RAWPATH"
+
+    cat "$___X_CMD_PKG_RAWPATH/$pkg_name/meta.tt.json" "$___X_CMD_PKG_RAWPATH/$pkg_name/version.tt.json"
 }
 # EndSection
 
 # Get Script Path
-___x_cmd_pkg___get_script_path(){
-    local pkg_name="${1:?Provide pkg name}"
-    local version="${2:?rovide version}"
-    local osarch="${3:?osarch as filter}"
-    local script="${4:?provide script name}"
-
-    ___x_cmd_pkg___all_info "${pkg_name}" | awk \
-        -v PKG_RAWPATH="$___X_CMD_PKG_RAWPATH" \
-        -v PKG_NAME="$pkg_name" -v VERSION_NAME="$version" -v OSARcH="$osarch" \
-        -v QUERY="$script" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/pkg.jobj.awk" \
-        -f "awk/pkg.script.awk"
-}
-
 
 ___x_cmd_pkg___awk(){
     # ___x_cmd_pkg___all_info "${FP:-nmap}" | awk \
@@ -64,3 +57,9 @@ ___x_cmd_pkg___awk(){
         -f "awk/pkg.url.awk"
 }
 
+___x_cmd_pkg_osarch(){
+    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
+        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
+    fi
+    printf "%s\n" "$___X_CMD_PKG_OSARCH"
+}
