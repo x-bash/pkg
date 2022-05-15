@@ -1,4 +1,19 @@
 
+
+# Get Script Path
+
+___x_cmd_pkg___attr(){
+    local script="${4:?Provide sciprt}"
+
+    ___x_cmd_pkg___all_info "$@" | awk \
+        -v script="$script" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
+        -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg._.awk" \
+        -f "awk/pkg.attr.awk"
+}
+
 ___x_cmd_pkg___get_script_path(){
     local script="${4:?Provide sciprt}"
 
@@ -7,8 +22,17 @@ ___x_cmd_pkg___get_script_path(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "awk/pkg.jobj.awk" \
+        -f "awk/pkg._.awk" \
         -f "awk/pkg.script.awk"
 }
+
+___x_cmd_pkg_osarch(){
+    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
+        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
+    fi
+    printf "%s\n" "$___X_CMD_PKG_OSARCH"
+}
+
 
 # Section: get raw text from all.7z
 ___x_cmd_pkg_locate(){
@@ -41,13 +65,3 @@ ___x_cmd_pkg___all_info(){
     cat "$___X_CMD_PKG_RAWPATH/$pkg_name/meta.tt.json" "$___X_CMD_PKG_RAWPATH/$pkg_name/version.tt.json"
 }
 # EndSection
-
-# Get Script Path
-
-
-___x_cmd_pkg_osarch(){
-    if [ -z "$___X_CMD_PKG_OSARCH" ]; then
-        ___X_CMD_PKG_OSARCH="$(os arch)/$(os name)"
-    fi
-    printf "%s\n" "$___X_CMD_PKG_OSARCH"
-}
