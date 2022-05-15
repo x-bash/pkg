@@ -1,23 +1,20 @@
+
 NR==1 {
-    pkg_name = $0
+    meta_json = $0
 }
 
 NR==2 {
-    meta = $0
-}
-
-NR==3 {
-    version = $0
+    version_json = $0
 }
 
 END {
-    parse_pkg_meta_json( jobj, pkg_name, meta )
-    parse_pkg_version_json( jobj, pkg_name, version )
+    parse_pkg_meta_json( jobj, PKG_NAME, meta_json )
+    parse_pkg_version_json( jobj, PKG_NAME, version_json )
 
-    pkg_init_table( jobj, table, jqu(pkg_name), pkg_name, "v8.3.2", "linux-arm64")
+    pkg_init_table( jobj, table, jqu(PKG_NAME), PKG_NAME, VERSION_NAME, OSARCH )
 
 
-    prefix = pkg_kp( pkg_name, "version")
+    prefix = pkg_kp( PKG_NAME, "version")
     l = jobj[ prefix L ]
     for (i=1; i<=l; ++i) {
         k = jobj[ prefix, i ]
