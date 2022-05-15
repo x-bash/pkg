@@ -5,7 +5,7 @@ x log init pkg
 
 xrc:mod pkg/lib/sb
 
-xrc:mod:lib pkg     which util main ls ls_installed install
+xrc:mod:lib pkg     which util main ls ls_installed download install
 
 ___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
 
@@ -32,6 +32,7 @@ ___x_cmd_pkg(){
         which)          shift; ___x_cmd_pkg_which "$@" ;;
 
         # x pkg download node=v12
+        download)       shift; ___x_cmd_pkg_download "$@" ;;
         install)        shift; ___x_cmd_pkg_install "$@" ;;
         reinstall)      shift; ___x_cmd_pkg_reinstall "$@" ;;
 
