@@ -43,7 +43,7 @@ ___x_cmd_pkg___bin_url_list(){
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/utils.awk" \
+        -f "awk/util.awk" \
         -f "awk/pkg._.awk" \
         -f "awk/pkg.urllist.awk"
 }

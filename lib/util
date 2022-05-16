@@ -3,16 +3,20 @@
 # Get Script Path
 
 # ___x_cmd_pkg___attr   hook.install,hook.setup
-___x_cmd_pkg___attr(){
-    local QUERY="${4:?Provide pat}"
 
-    eval "$(___x_cmd_pkg___all_info "$@" | awk \
+___x_cmd_pkg___attr_code(){
+    local QUERY="${4:?Provide pat}"
+    ___x_cmd_pkg___all_info "$@" | awk \
         -v QUERY="$QUERY" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/utils.awk" \
+        -f "awk/util.awk" \
         -f "awk/pkg._.awk" \
-        -f "awk/pkg.attr.awk")"
+        -f "awk/pkg.attr.awk"
+}
+
+___x_cmd_pkg___attr(){
+    eval "$(___x_cmd_pkg___attr_code "$@")"
 }
 
 ___x_cmd_pkg___get_script_path(){
@@ -22,7 +26,7 @@ ___x_cmd_pkg___get_script_path(){
         -v SCRIPT="$script" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/utils.awk" \
+        -f "awk/util.awk" \
         -f "awk/pkg._.awk" \
         -f "awk/pkg.script.awk"
 }
