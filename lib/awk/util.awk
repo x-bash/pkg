@@ -15,6 +15,13 @@ function pkg_eval_str( str, table, pkg_name, _attempt ){
     return str
 }
 
+function update_version_osarch( table, pkg_name, v, o ){
+    v = table[ jqu(pkg_name), jqu("version") ]
+    o = table[ jqu(pkg_name), jqu("osarch") ]
+
+    return juq( v ) "/" juq( o )
+}
+
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
     _rule_kp, _rule_l, i, k, _kpat, _os_arch ){
@@ -31,7 +38,9 @@ function pkg_init_table( jobj, table, table_kp,
 
     pkg_copy_table( jobj, jqu(pkg_name) SUBSEP jqu("meta"), table, table_kp )
 
-    version_osarch = version "/" osarch
+    # version_osarch = version "/" osarch
+    version_osarch = update_version_osarch( table, pkg_name )
+
     _rule_kp = pkg_kp( pkg_name, "meta", "rule" )
     _rule_l = jobj[ _rule_kp L ]
     for (i=1; i<=_rule_l; ++i) {
@@ -41,10 +50,13 @@ function pkg_init_table( jobj, table, table_kp,
         if (match(version_osarch, "^" _kpat)) {
             pkg_copy_table( jobj, _rule_kp SUBSEP k, table, table_kp )
         }
+        version_osarch = update_version_osarch( table, pkg_name )
     }
+
     pkg_copy_table( jobj, pkg_kp( pkg_name, "version", version, osarch), table, table_kp )
 
-    split(osarch, _os_arch, "/")
+    # split(osarch, _os_arch, "/")
+    split( juq( table[ jqu(pkg_name), jqu("osarch") ] ), _os_arch, "/" )
     pkg_add_table( "os", _os_arch[1], table, table_kp )
     pkg_add_table( "arch", _os_arch[2], table, table_kp )
 }
