@@ -1,9 +1,11 @@
 
 function handle( qpat ){
     varname = qpat
+
     gsub(".", SUBSEP, qpat)
     gsub(".", "_", varname)
-    print varname "=" jobj[ PKG_NAME, qpat ]
+
+    print varname "=" shqu( juq( jobj[ PKG_NAME, qpat ] ) )
 }
 
 NR>2 {

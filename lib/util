@@ -5,13 +5,13 @@
 ___x_cmd_pkg___attr(){
     local QUERY="${4:?Provide sciprt}"
 
-    ___x_cmd_pkg___all_info "$@" | awk \
+    eval "$(___x_cmd_pkg___all_info "$@" | awk \
         -v QUERY="$QUERY" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "awk/utils.awk" \
         -f "awk/pkg._.awk" \
-        -f "awk/pkg.attr.awk"
+        -f "awk/pkg.attr.awk")"
 }
 
 ___x_cmd_pkg___get_script_path(){
