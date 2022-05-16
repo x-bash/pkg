@@ -38,8 +38,7 @@ function pkg_init_table( jobj, table, table_kp,
 
     pkg_copy_table( jobj, jqu(pkg_name) SUBSEP jqu("meta"), table, table_kp )
 
-    # version_osarch = version "/" osarch
-    version_osarch = update_version_osarch( table, pkg_name )
+    version_osarch = table_version_osarch( table, pkg_name ) # May define version or osarch (as default) in the meta file
 
     _rule_kp = pkg_kp( pkg_name, "meta", "rule" )
     _rule_l = jobj[ _rule_kp L ]
@@ -49,8 +48,8 @@ function pkg_init_table( jobj, table, table_kp,
         gsub("\\*", "[^/]+", _kpat)
         if (match(version_osarch, "^" _kpat)) {
             pkg_copy_table( jobj, _rule_kp SUBSEP k, table, table_kp )
+            version_osarch = table_version_osarch( table, pkg_name )
         }
-        version_osarch = update_version_osarch( table, pkg_name )
     }
 
     pkg_copy_table( jobj, pkg_kp( pkg_name, "version", version, osarch), table, table_kp )
@@ -104,8 +103,24 @@ function pkg_copy_table(src_obj, src_kp, table, table_kp){
 
 # EndSetion
 
-# Section: parsing
+# Section: table
 
+function table_version_osarch( table, pkg_name ){
+    return juq( table_version( table, pkg_name ) ) "/" juq( table_osarch( table, pkg_name ) )
+}
+
+function table_version( table, pkg_name ){
+    return table[ jqu(pkg_name), jqu("version") ]
+}
+
+function table_osarch( table, pkg_name ){
+    return table[ jqu(pkg_name), jqu("osarch") ]
+}
+
+
+# EndSection
+
+# Section: parsing
 
 function parse_pkg_jqparse( str, jobj, kp,       arrl, arr ){
     arrl = split(str, arr, "\t")
