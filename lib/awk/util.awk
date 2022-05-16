@@ -71,6 +71,11 @@ function pkg_add_table( k, v, table, table_kp,  l ){
 }
 
 # Section: copy
+function pkg_copy_table(src_obj, src_kp, table, table_kp){
+    if (src_obj[ src_kp ] == "{") return pkg_copy_table___dict(src_obj, src_kp, table, table_kp)
+    if (src_obj[ src_kp ] == "[") return pkg_copy_table___list(src_obj, src_kp, table, table_kp)
+    table[ table_kp ] = src_obj[ src_kp ]
+}
 
 function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, _l ){
     l = src_obj[ src_kp L ]
@@ -94,17 +99,9 @@ function pkg_copy_table___list( src_obj, src_kp, table, table_kp,       l, i, _l
         pkg_copy_table( src_obj, src_kp SUBSEP i, table, table_kp SUBSEP i )
     }
 }
-
-function pkg_copy_table(src_obj, src_kp, table, table_kp){
-    if (src_obj[ src_kp ] == "{") return pkg_copy_table___dict(src_obj, src_kp, table, table_kp)
-    if (src_obj[ src_kp ] == "[") return pkg_copy_table___list(src_obj, src_kp, table, table_kp)
-    table[ table_kp ] = src_obj[ src_kp ]
-}
-
-# EndSetion
+# EndSection
 
 # Section: table
-
 function table_version_osarch( table, pkg_name ){
     return juq( table_version( table, pkg_name ) ) "/" juq( table_osarch( table, pkg_name ) )
 }
@@ -116,8 +113,6 @@ function table_version( table, pkg_name ){
 function table_osarch( table, pkg_name ){
     return table[ jqu(pkg_name), jqu("osarch") ]
 }
-
-
 # EndSection
 
 # Section: parsing
