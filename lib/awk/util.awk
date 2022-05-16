@@ -1,4 +1,4 @@
-function pkg_eval_str( str, table, pkg_name, _attempt ){
+function pkg_eval_str( str, table, pkg_name,            _attempt ){
     pkg_name = jqu( pkg_name )
 
     str = juq(str)
@@ -15,6 +15,7 @@ function pkg_eval_str( str, table, pkg_name, _attempt ){
     return str
 }
 
+# Section: init table
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
     _rule_kp, _rule_l, i, k, _kpat, _os_arch ){
@@ -62,6 +63,7 @@ function pkg_add_table( k, v, table, table_kp,  l ){
     # print table_kp SUBSEP k "---" v
     table[ table_kp, k ] = jqu(v)
 }
+# EndSection
 
 # Section: copy
 function pkg_copy_table(src_obj, src_kp, table, table_kp){
