@@ -66,7 +66,7 @@ function pkg_add_table( k, v, table, table_kp,  l ){
         table[ table_kp L ] = ( l = table[ table_kp L ] + 1 )
         table[ table_kp, l ] = k
     }
-    print table_kp SUBSEP k "---" v
+    # print table_kp SUBSEP k "---" v
     table[ table_kp, k ] = jqu(v)
 }
 
