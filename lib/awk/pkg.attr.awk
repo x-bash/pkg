@@ -8,10 +8,6 @@ function handle( qpat ){
     print varname "=" shqu( juq( jobj[ PKG_NAME, qpat ] ) )
 }
 
-NR>2 {
-    handle( $0 )
-}
-
 END {
     query_arrl = split(QUERY, query_arr, ",")
     for (i=1; i<=query_arrl; ++i) {

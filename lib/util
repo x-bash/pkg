@@ -2,8 +2,9 @@
 
 # Get Script Path
 
+# ___x_cmd_pkg___attr   hook.install,hook.setup
 ___x_cmd_pkg___attr(){
-    local QUERY="${4:?Provide sciprt}"
+    local QUERY="${4:?Provide pat}"
 
     eval "$(___x_cmd_pkg___all_info "$@" | awk \
         -v QUERY="$QUERY" \
