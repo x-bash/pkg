@@ -1,11 +1,15 @@
 
-function handle( qpat ){
+function handle( qpat,  _arr, _arrl, _pat ){
     varname = qpat
 
-    gsub("\\.", SUBSEP, qpat)
+    _arrl = split(qpat, _arr, /\./)
+    for (i=1; i<=_arrl; ++i) {
+        _pat = (_pat == "") ? jqu(_arr[i]) : ( _pat SUBSEP jqu(_arr[i]))
+    }
+
     gsub("\\.", "_", varname)
 
-    print varname "=" shqu( juq( table_attr( table, PKG_NAME, jqu("hook") SUBSEP jqu("env-init") )  ) )
+    print varname "=" shqu( juq( table_attr( table, PKG_NAME, _pat )  ) )
 }
 
 END {
