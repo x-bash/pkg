@@ -16,6 +16,8 @@ ___x_cmd_pkg_setup___min(){
 
 ___x_cmd_pkg_setup___min_default(){
     :
-    # binpath
     # binlist
+
+    # binpath
+
 }
