@@ -56,7 +56,7 @@ ___x_cmd_pkg_version(){
     ___x_cmd_pkg___all_info "${pkg_name}" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/pkg.jobj.awk" \
+        -f "awk/utils.awk" \
         -f "awk/pkg.lsversion.awk"
 }
 
