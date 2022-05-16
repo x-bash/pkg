@@ -91,11 +91,11 @@ function table_attr( table, pkg_name, attr_name ){
 }
 
 function table_version( table, pkg_name ){
-    return table_attr("version")
+    return table_attr( table, pkg_name, "version")
 }
 
 function table_osarch( table, pkg_name ){
-    return table_attr("osarch")
+    return table_attr( table, pkg_name, "osarch")
 }
 
 function table_eval( table, pkg_name, str ){
