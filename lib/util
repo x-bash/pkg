@@ -83,5 +83,5 @@ ___x_cmd_pkg___bin_list(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.bin_list.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.list.bin.awk"
 }
