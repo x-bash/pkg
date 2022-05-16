@@ -2,10 +2,10 @@
 function handle( qpat ){
     varname = qpat
 
-    gsub(".", SUBSEP, qpat)
-    gsub(".", "_", varname)
+    gsub("\\.", SUBSEP, qpat)
+    gsub("\\.", "_", varname)
 
-    print varname "=" shqu( juq( jobj[ PKG_NAME, qpat ] ) )
+    print varname "=" shqu( juq( table_attr( table, pkg_name, "hook" SUBSEP "setup")  ) )
 }
 
 END {
