@@ -15,13 +15,6 @@ function pkg_eval_str( str, table, pkg_name, _attempt ){
     return str
 }
 
-function update_version_osarch( table, pkg_name, v, o ){
-    v = table[ jqu(pkg_name), jqu("version") ]
-    o = table[ jqu(pkg_name), jqu("osarch") ]
-
-    return juq( v ) "/" juq( o )
-}
-
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
     _rule_kp, _rule_l, i, k, _kpat, _os_arch ){
