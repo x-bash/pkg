@@ -10,7 +10,7 @@ ___x_cmd_pkg_download(){
 
     local url_list
     local file_suffix
-    url_list="$(___x_cmd_pkg___url_list "$@")"
+    url_list="$(___x_cmd_pkg___list "$@" "url.${___X_CMD_WHICHNET:-_}" )"
     ___x_cmd_pkg___attr "$@" "$osarch" file_suffix
 
     local url
@@ -71,13 +71,4 @@ ___x_cmd_pkg_download___check_hashsum(){
         return 0
     fi
 
-}
-
-___x_cmd_pkg___url_list(){
-    ___x_cmd_pkg___all_info "$@" | awk \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.list.url.awk"
 }
