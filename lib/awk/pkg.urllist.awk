@@ -1,14 +1,14 @@
 
 
 END {
-    prefix = jqu("VERSION") SUBSEP jqu("url") SUBSEP jqu( NET_REGION )
+    prefix = jqu(PKG_NAME) SUBSEP jqu("url") SUBSEP jqu( NET_REGION )
 
-    if ( "[" != jobj[ prefix ] ) {
-        printf juq( jobj[ prefix ] ) )
+    if ( "[" != table[ prefix ] ) {
+        printf juq( table[ prefix ] ) )
     } else {
-        l = jobj[ prefix L ]
+        l = table[ prefix L ]
         for (i=1; i<=l; ++i) {
-            print juq( jobj[ prefix, i ])
+            print juq( table[ prefix, i ])
         }
     }
 }
