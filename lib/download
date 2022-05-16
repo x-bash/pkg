@@ -15,19 +15,22 @@ ___x_cmd_pkg_download(){
     pkg:debug "url_list: $url_list ball: $ball"
 
     if [ -f "$ball" ]; then
-        if [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr sha256)" ] ; then
+        if [ "$(___x_cmd_pkg___attr sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr sha256)" ] ; then
             pkg:warn "File corrupted. Download the $ball again."
             x rmrf "$ball"
         fi
+        return
     fi
 
     while read -r url; do
-        ___x_cmd_httpget "$url" "$ball" || {
+        # TODO: ___x_cmd_httpget support 302
+        # ___x_cmd_httpget "$url" "$ball" || {
+        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball"  || {
             pkg:warn "Fail to download from $url"
             continue
         }
 
-        if [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr sha256)" ] ; then
+        if [ "$(___x_cmd_pkg___attr sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "" sha256)" ] ; then
             pkg:warn "File corrupted."
             x rmrf "$ball"
         fi
