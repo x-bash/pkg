@@ -60,7 +60,7 @@ ___x_cmd_pkg_locate(){
 # Default, China
 ___x_cmd_pkg___all_info(){
     local pkg_name="${1:?Provide pkg name}"
-    local version="${2:?rovide version}"
+    local version="${2:?Provide version}"
     local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
 
     pkg_name="$(___x_cmd_pkg_locate "${1:?Provide name}")" || return
