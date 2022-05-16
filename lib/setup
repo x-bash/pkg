@@ -10,6 +10,12 @@ ___x_cmd_pkg_setup___min(){
     if script_path="$(___x_cmd_pkg___get_script_path "$@" "" setup)"; then
         . "${script_path}"
     else
-        :
+        ___x_cmd_pkg_setup___min_default
     fi
+}
+
+___x_cmd_pkg_setup___min_default(){
+    :
+    # binpath
+    # binlist
 }
