@@ -5,14 +5,16 @@ ___x_cmd_pkg_install(){
     if script_path="$(___x_cmd_pkg___get_script_path "$@" "" install)"; then
         . "$___X_CMD_PKG_RAWPATH$script_path"
     else
-        ___x_cmd_pkg_install___unzip    "$@" || return
+        ___x_cmd_pkg_install___unzip "$@" || return
     fi
 }
 
 ___x_cmd_pkg_reinstall(){
     local pkg_name="${1:?Provide pkg name}"
     local version="${2:?Provide version}"
-    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version"
+    local file_suffix
+    ___x_cmd_pkg___attr "$@" "" file_suffix
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     pkg:debug "ball: $ball"
     if [ -f "$ball" ]; then
         pkg:info "Delete $ball and reinstall $*"
@@ -27,10 +29,11 @@ ___x_cmd_pkg_reinstall(){
 ___x_cmd_pkg_install___unzip(){
     local pkg_name="${1:?Provide pkg name}"
     local version="${2:?Provide version}"
-
-    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version"
+    local file_suffix
+    ___x_cmd_pkg___attr "$@" "" file_suffix
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     local tgt="$___X_CMD_PKG_INSTALL_PATH/$pkg_name/$version"
-
+    pkg:debug "unzip ball: $ball tgt: $tgt"
     x uz "$ball" "$tgt" || {
         pkg:warn "Fail to unzip $ball"
     }

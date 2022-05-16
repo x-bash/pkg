@@ -8,14 +8,16 @@ ___x_cmd_pkg_download(){
     local version="${2:?Provide version}"
 
     local url_list
+    local file_suffix
     url_list="$(___x_cmd_pkg___bin_url_list "$@")"
+    ___x_cmd_pkg___attr "$@" "" file_suffix
 
     local url
-    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version"
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     pkg:debug "url_list: $url_list ball: $ball"
 
     if [ -f "$ball" ]; then
-        if [ "$(___x_cmd_pkg___attr sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr sha256)" ] ; then
+        if [ "$(___x_cmd_pkg___attr "$@" "" sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "" sha256)" ] ; then
             pkg:warn "File corrupted. Download the $ball again."
             x rmrf "$ball"
         fi
@@ -30,7 +32,7 @@ ___x_cmd_pkg_download(){
             continue
         }
 
-        if [ "$(___x_cmd_pkg___attr sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "" sha256)" ] ; then
+        if [ "$(___x_cmd_pkg___attr "$@" "" sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "" sha256)" ] ; then
             pkg:warn "File corrupted."
             x rmrf "$ball"
         fi
