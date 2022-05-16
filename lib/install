@@ -10,7 +10,15 @@ ___x_cmd_pkg_install(){
 }
 
 ___x_cmd_pkg_reinstall(){
-    :
+    local pkg_name="${1:?Provide pkg name}"
+    local version="${2:?Provide version}"
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version"
+    pkg:debug "ball: $ball"
+    if [ -f "$ball" ]; then
+        pkg:info "Delete $ball and reinstall $*"
+        x rmrf "$ball"
+    fi
+    ___x_cmd_pkg_install "$@"
     # Delete the installation. Re unpack or running the installation script ?
 }
 
