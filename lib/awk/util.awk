@@ -9,6 +9,7 @@ function pkg_init_table( jobj, table, table_kp,
 
     pkg_add_table( "osarch", osarch, table, table_kp )
     pkg_add_table( "version", version, table, table_kp )
+
     pkg_add_table( "sb_repo", pkg_name, table, table_kp )
     pkg_add_table( "sb_gh", "https://raw.githubusercontent.com/static-build/%{sb_repo}/%{sb_branch}/bin", table, table_kp )
     pkg_add_table( "sb_gt", "https://gitcode.net/x-bash/%{sb_repo}/-/raw/%{sb_branch}/bin", table, table_kp )
