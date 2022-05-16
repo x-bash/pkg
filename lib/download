@@ -17,8 +17,12 @@ ___x_cmd_pkg_download(){
     local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     pkg:debug "url_list: $url_list ball: $ball"
 
+    local md5
+    local sha1
     local sha256
-    ___x_cmd_pkg___attr "$@" "$osarch" sha256
+    local sha512
+
+    ___x_cmd_pkg___attr "$@" "$osarch" md5 sha1 sha256 sha512
 
     if [ -f "$ball" ]; then
         if [ -n "$sha256" ] && [ "$(___x_cmd_sha256 "$ball")" != "$sha256" ] ; then
@@ -49,6 +53,29 @@ A
 
 }
 
+___x_cmd_pkg_download___check_hashsum(){
+    local filepath="$1"
+    local md5="$2"
+    local sha1="$3"
+    local sha256="$4"
+    local sha512="$5"
+
+    if [ -n "$sha512" ]; then
+
+    elif [ -n "$sha256" ]; then
+
+    elif [ -n "$sha1" ]; then
+
+    elif [ -n "$md5" ]; then
+
+    else
+        # In the future, will return 1
+        x:error "No checksum provided."
+        return 0
+    fi
+
+}
+
 # Get bin list if zero argument
 # Display path if arguments provided
 # _bin_url__
@@ -62,6 +89,28 @@ ___x_cmd_pkg___bin_url_list(){
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.urllist.awk"
 }
 
+___x_cmd_md5(){
+    if command -v md5 1>/dev/null; then
+        md5 "$@" | awk '{ print $1; }'
+    elif command -v md5sum; then
+        md5sum "$@" | awk '{ print $1; }'
+    else
+        x:error "md5/md5sum command NOT found."
+        return 1
+    fi
+}
+
+___x_cmd_sha1(){
+    if command -v shasum 1>/dev/null; then
+        shasum -a 1 "$@" | awk '{ print $1; }'
+    elif command -v sha1sum; then
+        sha1sum "$@" | awk '{ print $1; }'
+    else
+        x:error "shasum/sha1sum command NOT found."
+        return 1
+    fi
+}
+
 ___x_cmd_sha256(){
     if command -v shasum 1>/dev/null; then
         shasum -a 256 "$@" | awk '{ print $1; }'
@@ -69,6 +118,17 @@ ___x_cmd_sha256(){
         sha256sum "$@" | awk '{ print $1; }'
     else
         x:error "shasum/sha256sum command NOT found."
+        return 1
+    fi
+}
+
+___x_cmd_sha512(){
+    if command -v shasum 1>/dev/null; then
+        shasum -a 512 "$@" | awk '{ print $1; }'
+    elif command -v sha512sum; then
+        sha512sum "$@" | awk '{ print $1; }'
+    else
+        x:error "shasum/sha512sum command NOT found."
         return 1
     fi
 }
