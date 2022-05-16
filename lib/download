@@ -10,7 +10,7 @@ ___x_cmd_pkg_download(){
 
     local url_list
     local file_suffix
-    url_list="$(___x_cmd_pkg___bin_url_list "$@")"
+    url_list="$(___x_cmd_pkg___url_list "$@")"
     ___x_cmd_pkg___attr "$@" "$osarch" file_suffix
 
     local url
@@ -73,11 +73,7 @@ ___x_cmd_pkg_download___check_hashsum(){
 
 }
 
-# Get bin list if zero argument
-# Display path if arguments provided
-# _bin_url__
-# _bin_url_cn
-___x_cmd_pkg___bin_url_list(){
+___x_cmd_pkg___url_list(){
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
