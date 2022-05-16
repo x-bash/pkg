@@ -1,6 +1,6 @@
 
 ___x_cmd_pkg_install(){
-    ___x_cmd_pkg_install___download "$@" || return
+    ___x_cmd_pkg_download "$@" || return
     local script_path
     if script_path="$(___x_cmd_pkg___get_script_path "$@" install)"; then
         . "$script_path"
