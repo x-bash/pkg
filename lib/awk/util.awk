@@ -17,7 +17,7 @@ function pkg_eval_str( str, table, pkg_name, _attempt ){
 
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
-    _rule_kp, _rule_l, i, k, _kpat ){
+    _rule_kp, _rule_l, i, k, _kpat, _os_arch ){
 
     # Predefined env variables
     pkg_add_table( "sb_branch", "main", table, table_kp )
@@ -43,6 +43,10 @@ function pkg_init_table( jobj, table, table_kp,
         }
     }
     pkg_copy_table( jobj, pkg_kp( pkg_name, "version", version, osarch), table, table_kp )
+
+    split(osarch, _os_arch, "/")
+    pkg_add_table( "os", _os_arch[1], table, table_kp )
+    pkg_add_table( "arch", _os_arch[2], table, table_kp )
 }
 
 function pkg_add_table( k, v, table, table_kp,  l ){
