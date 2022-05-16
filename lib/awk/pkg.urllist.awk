@@ -3,9 +3,13 @@
 END {
     prefix = jqu("VERSION") SUBSEP jqu("url") SUBSEP jqu( NET_REGION )
 
-    l = jobj[ prefix L ]
-    for (i=1; i<=l; ++i) {
-        print juq( jobj[ prefix, i ])
+    if ( "[" != jobj[ prefix ] ) {
+        printf juq( jobj[ prefix ] ) )
+    } else {
+        l = jobj[ prefix L ]
+        for (i=1; i<=l; ++i) {
+            print juq( jobj[ prefix, i ])
+        }
     }
 }
 
