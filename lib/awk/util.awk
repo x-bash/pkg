@@ -86,7 +86,7 @@ function table_version_osarch( table, pkg_name ){
 }
 
 function table_attr( table, pkg_name, attr_name ){
-    return table[ jqu(pkg_name), jqu( attr_name ) ]
+    return table[ jqu( pkg_name ), jqu( attr_name ) ]
 }
 
 function table_version( table, pkg_name ){
