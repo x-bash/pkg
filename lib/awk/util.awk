@@ -2,7 +2,7 @@
 # Section: init table
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
-    _rule_kp, _rule_l, i, k, _kpat, _os_arch ){
+    _rule_kp, _rule_l, i, k, _kpat, _os_arch, _final_version ){
 
     # Predefined env variables
     pkg_add_table( "sb_branch", "main", table, table_kp )
@@ -31,7 +31,10 @@ function pkg_init_table( jobj, table, table_kp,
         }
     }
 
-    pkg_copy_table( jobj, pkg_kp( pkg_name, "version", version, osarch), table, table_kp )
+    _final_version = table_version( table, pkg_name)
+    if ( _final_version != "" ) {
+        pkg_copy_table( jobj, pkg_kp( pkg_name, "version", _final_version, osarch), table, table_kp )
+    }
 
     split( juq( table_osarch( table, pkg_name ) ), _os_arch, "/" )
     pkg_add_table( "os", _os_arch[1], table, table_kp )
@@ -86,15 +89,15 @@ function table_version_osarch( table, pkg_name ){
 }
 
 function table_attr( table, pkg_name, attr_name ){
-    return table[ jqu( pkg_name ), jqu( attr_name ) ]
+    return table[ jqu( pkg_name ), attr_name ]
 }
 
 function table_version( table, pkg_name ){
-    return table_attr( table, pkg_name, "version")
+    return table_attr( table, pkg_name, jqu("version") )
 }
 
 function table_osarch( table, pkg_name ){
-    return table_attr( table, pkg_name, "osarch")
+    return table_attr( table, pkg_name, jqu("osarch") )
 }
 
 function table_eval( table, pkg_name, str ){

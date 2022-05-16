@@ -5,7 +5,7 @@ function handle( qpat ){
     gsub("\\.", SUBSEP, qpat)
     gsub("\\.", "_", varname)
 
-    print varname "=" shqu( juq( table_attr( table, pkg_name, "hook" SUBSEP "setup")  ) )
+    print varname "=" shqu( juq( table_attr( table, PKG_NAME, jqu("hook") SUBSEP jqu("env-init") )  ) )
 }
 
 END {
