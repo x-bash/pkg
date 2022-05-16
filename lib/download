@@ -25,7 +25,7 @@ ___x_cmd_pkg_download(){
     ___x_cmd_pkg___attr "$@" "$osarch" md5 sha1 sha256 sha512
 
     if [ -f "$ball" ]; then
-        if [ -n "$sha256" ] && [ "$(___x_cmd_sha256 "$ball")" != "$sha256" ] ; then
+        if ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512"; then
             pkg:warn "File corrupted. Download the $ball again."
             x rmrf "$ball"
         else
@@ -36,12 +36,12 @@ ___x_cmd_pkg_download(){
     while read -r url; do
         # TODO: ___x_cmd_httpget support 302
         # ___x_cmd_httpget "$url" "$ball" || {
-        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball"  || {
+        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
             pkg:warn "Fail to download from $url"
             continue
         }
 
-        if [ -n "$sha256" ] && [ "$(___x_cmd_sha256 "$ball")" != "$sha256" ] ; then
+        if ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512"; then
             pkg:warn "File corrupted."
             x rmrf "$ball"
         else
