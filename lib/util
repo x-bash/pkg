@@ -11,8 +11,8 @@ ___x_cmd_pkg___attr_code(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk"
-        # -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.attr.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.attr.awk"
 }
 
 ___x_cmd_pkg___attr(){

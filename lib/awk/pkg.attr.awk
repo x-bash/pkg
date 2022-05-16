@@ -11,6 +11,6 @@ function handle( qpat ){
 END {
     query_arrl = split(QUERY, query_arr, ",")
     for (i=1; i<=query_arrl; ++i) {
-        handle ( query_arr[ i ] )
+        handle( query_arr[ i ] )
     }
 }
