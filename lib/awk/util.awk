@@ -57,6 +57,7 @@ function pkg_copy_table(src_obj, src_kp, table, table_kp){
     if (src_obj[ src_kp ] == "{") return pkg_copy_table___dict(src_obj, src_kp, table, table_kp)
     if (src_obj[ src_kp ] == "[") return pkg_copy_table___list(src_obj, src_kp, table, table_kp)
     table[ table_kp ] = src_obj[ src_kp ]
+    # print "src_kp: " src_kp "table_kp: " table_kp
 }
 
 function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, _l ){
@@ -108,7 +109,7 @@ function pkg_eval_str( str, table, pkg_name,            _attempt ){
     pkg_name = jqu( pkg_name )
 
     str = juq(str)
-    while ( match( str, "\%\{[^}]+\}" ) ) {
+    while ( match( str, "%{[^}]+}" ) ) {
         if ( ++_attempt > 100 ) exit_msg( sprintf( "Exit because replacement attempts more than 100[%s]: %s", _attempt, str ) )
         p = substr( str, RSTART+2, RLENGTH-3 )
         t = table[ pkg_name, jqu(p) ]
