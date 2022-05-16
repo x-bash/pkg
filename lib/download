@@ -43,9 +43,9 @@ ___x_cmd_pkg___bin_url_list(){
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "awk/util.awk" \
-        -f "awk/pkg._.awk" \
-        -f "awk/pkg.urllist.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.urllist.awk"
 }
 
 ___x_cmd_sha256(){
