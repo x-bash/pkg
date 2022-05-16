@@ -79,5 +79,5 @@ ___x_cmd_pkg___url_list(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.urllist.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.url_list.awk"
 }
