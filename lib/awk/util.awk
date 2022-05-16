@@ -57,7 +57,6 @@ function pkg_copy_table(src_obj, src_kp, table, table_kp){
     if (src_obj[ src_kp ] == "{") return pkg_copy_table___dict(src_obj, src_kp, table, table_kp)
     if (src_obj[ src_kp ] == "[") return pkg_copy_table___list(src_obj, src_kp, table, table_kp)
     table[ table_kp ] = src_obj[ src_kp ]
-    # print "src_kp: " src_kp "table_kp: " table_kp
 }
 
 function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, _l ){
