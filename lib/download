@@ -17,12 +17,16 @@ ___x_cmd_pkg_download(){
     local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     pkg:debug "url_list: $url_list ball: $ball"
 
+    local sha256
+    ___x_cmd_pkg___attr "$@" "$osarch" sha256
+
     if [ -f "$ball" ]; then
-        if [ "$(___x_cmd_pkg___attr "$@" "$osarch" sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "$osarch" sha256)" ] ; then
+        if [ -n "$sha256" ] && [ "$(___x_cmd_sha256 "$ball")" != "$sha256" ] ; then
             pkg:warn "File corrupted. Download the $ball again."
             x rmrf "$ball"
+        else
+            return
         fi
-        return
     fi
 
     while read -r url; do
@@ -33,9 +37,11 @@ ___x_cmd_pkg_download(){
             continue
         }
 
-        if [ "$(___x_cmd_pkg___attr "$@" "$osarch" sha256)" != "" ] && [ "$(___x_cmd_sha256 "$ball")" != "$(___x_cmd_pkg___attr "$@" "$osarch" sha256)" ] ; then
+        if [ -n "$sha256" ] && [ "$(___x_cmd_sha256 "$ball")" != "$sha256" ] ; then
             pkg:warn "File corrupted."
             x rmrf "$ball"
+        else
+            return
         fi
     done <<A
 $url_list
