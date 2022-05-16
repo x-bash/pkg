@@ -12,7 +12,7 @@ ___x_cmd_pkg___attr_code(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/pkg.attr.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.attr.awk"
 }
 
 ___x_cmd_pkg___attr(){
@@ -28,7 +28,7 @@ ___x_cmd_pkg___get_script_path(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/pkg.script.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.script.awk"
 }
 
 ___x_cmd_pkg_osarch(){
