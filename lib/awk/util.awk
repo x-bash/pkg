@@ -64,6 +64,7 @@ function pkg_copy_table(src_obj, src_kp, table, table_kp){
 }
 
 function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, k, _l ){
+    table[ table_kp ] = src_obj[ src_kp ]
     l = src_obj[ src_kp L ]
 
     for (i=1; i<=l; ++i) {
@@ -78,6 +79,7 @@ function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, k,
 }
 
 function pkg_copy_table___list( src_obj, src_kp, table, table_kp,       l, i, _l ){
+    table[ table_kp ] = src_obj[ src_kp ]
     l = src_obj[ src_kp L ]
     table[ table_kp L ] = l
 
