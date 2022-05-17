@@ -2,8 +2,6 @@
 
 # Section: xbin
 
-
-
 ___x_cmd_pkg_xbin(){
     case "$1" in
         init)       shift; ___x_cmd_pkg_xbin_init "$@" ;;
