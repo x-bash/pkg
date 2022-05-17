@@ -47,7 +47,6 @@ function pkg_add_table( k, v, table, table_kp,  l ){
         table[ table_kp L ] = ( l = table[ table_kp L ] + 1 )
         table[ table_kp, l ] = k
     }
-    # print table_kp SUBSEP k "---" v
     table[ table_kp, k ] = jqu(v)
 }
 # EndSection
@@ -59,7 +58,7 @@ function pkg_copy_table(src_obj, src_kp, table, table_kp){
     table[ table_kp ] = src_obj[ src_kp ]
 }
 
-function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, _l ){
+function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, k, _l ){
     l = src_obj[ src_kp L ]
 
     for (i=1; i<=l; ++i) {
