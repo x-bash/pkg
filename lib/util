@@ -105,10 +105,8 @@ ___x_cmd_pkg___list(){
 
 
 ___x_cmd_pkg___default_version(){
-    local expr="${4:?Provide EXPR, like bin, url.cn}"
 
     ___x_cmd_pkg___all_info "$@" | awk \
-        -v EXPR="$expr" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
