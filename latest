@@ -68,3 +68,5 @@ ___x_cmd_pkg_version(){
 # ___x_cmd_pkg___attr java "18-open" "" sha256xws
 # ___x_cmd_pkg_download java "18-open"
 # ___x_cmd_pkg_reinstall java "18-open"
+# ___x_cmd_pkg___default_version java
+# ___x_cmd_pkg___default_version node
