@@ -23,6 +23,10 @@ ___x_cmd_pkg(){
 
         # x pkg exec python=
         *=)             ___x_cmd_pkg_exec "$@" ;;
+
+        xbin)           shift; ___x_cmd_pkg_xbin "$@" ;;
+
+        *)              return 1
     esac
 }
 
