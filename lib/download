@@ -67,7 +67,7 @@ ___x_cmd_pkg_download___check_hashsum(){
         [ "$(___x_cmd_md5 "$filepath")" != "$md5" ]
     else
         # In the future, will return 1
-        x:error "No checksum provided."
+        x:warn "No checksum provided."
         return 0
     fi
 
