@@ -31,14 +31,7 @@ ___x_cmd_pkg_download(){
         x rmrf "$ball"
     fi
     while read -r url; do
-        # TODO: ___x_cmd_httpget support 302
-        # ___x_cmd_httpget "$url" "$ball" || {
-        pkg:info "Download package from $url to $ball"
-        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
-            pkg:warn "Fail to download from $url"
-            continue
-        }
-
+        ___x_cmd_pkg_download_file "$url" "$ball" || return
         ! ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512" || return 0
 
         pkg:warn "File corrupted."
@@ -48,6 +41,38 @@ $url_list
 A
 
 }
+
+___x_cmd_pkg_download_file(){
+    local url="${1:?Provide url}"
+    local ball="${2:?Provide ball}"
+    case "$url" in
+        static-build://*)       ___x_cmd_pkg_download_file_from_http "$url" "$ball" ;;
+        http://*|https://*)     ___x_cmd_pkg_download_file_from_static_build "$url" "$ball" ;;
+        *)                      pkg:error "Exit because of unknown URL: $url." >&2 ;;
+    esac
+}
+
+___x_cmd_pkg_download_file_from_http(){
+    # TODO: ___x_cmd_httpget support 302
+    # ___x_cmd_httpget "$url" "$ball" || {
+    pkg:info "Download package from $url to $ball"
+    curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
+        pkg:warn "Fail to download from $url"
+        return 1
+    }
+}
+
+___x_cmd_pkg_download_file_from_static_build(){
+    # TODO: ___x_cmd_httpget support 302
+    # ___x_cmd_httpget "$url" "$ball" || {
+    pkg:info "Download package from $url to $ball"
+    curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
+        pkg:warn "Fail to download from $url"
+        return 1
+    }
+}
+
+
 
 ___x_cmd_pkg_download___check_hashsum(){
     local filepath="$1"
