@@ -30,7 +30,6 @@ ___x_cmd_pkg_download(){
         pkg:warn "File corrupted. Download the $ball again."
         x rmrf "$ball"
     fi
-
     while read -r url; do
         # TODO: ___x_cmd_httpget support 302
         # ___x_cmd_httpget "$url" "$ball" || {
