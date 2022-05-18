@@ -53,6 +53,9 @@ ___x_cmd_pkg_download_file(){
 }
 
 ___x_cmd_pkg_download_file_from_http(){
+    local url="${1:?Provide url}"
+    local ball="${2:?Provide ball}"
+
     # TODO: ___x_cmd_httpget support 302
     # ___x_cmd_httpget "$url" "$ball" || {
     pkg:info "Download package from $url to $ball"
@@ -63,15 +66,86 @@ ___x_cmd_pkg_download_file_from_http(){
 }
 
 ___x_cmd_pkg_download_file_from_static_build(){
-    # TODO: ___x_cmd_httpget support 302
-    # ___x_cmd_httpget "$url" "$ball" || {
-    pkg:info "Download package from $url to $ball"
-    curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
-        pkg:warn "Fail to download from $url"
-        return 1
-    }
+    local url="${1:?Provide url}"
+    local ball="${2:?Provide ball}"
+
+    repo="${url#static-build://}"
+    exe="${url#*/}"
+    repo="${repo%%/*}"
+
+    target="${ball%/*}"
+
+    ___x_cmd_pkg_download_file___from_static_build "$repo" "$exe"
 }
 
+
+___x_cmd_pkg_download_file___from_static_build(){
+    local IFS='
+    '
+    local repo="${1:?Provide repo name, like p7zip}"
+    local app="${2:-${repo}}"
+
+    local target="$HOME/.x-cmd/.bin/$app"
+    mkdir -p "$target"
+
+    local arch
+    arch="$(os arch)"
+    local osname
+    osname="$(os name)"
+
+    local exe
+    case "$osname" in
+        win)    exe=$app.x64.exe        ;;
+        *)      exe=$app.${osname}.${arch}  ;;
+    esac
+    # Rely
+    if [ ! -f "$target/$exe" ]; then
+
+        static_build_log info "Downloading: ${repo}/bin/$exe.7z"
+
+        if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z" "$target/$exe.7z"; then
+            static_build_log warn "Download failure: $repo/main bin/$exe.7z"
+            static_build_log warn "File Not Found. Perhaps the platform is NOT supported: $exe"
+            return 1
+        fi
+
+        (
+            cd "$target" && {
+                local size
+
+                size=$(wc -c "$exe.7z")
+                size=${size% *}
+                size=$(printf "%s" $size)   # Notice: Intentionary let it unquoted.
+
+                xrc p7zip
+                if [ "$size" -gt 20 ]; then
+                    p7zd x "$exe.7z" 1>/dev/null 2>/dev/null
+                else
+                    size="$(cat "$exe.7z")"
+                    local i
+                    local suffix
+
+                    # TODO: using job for concurrency.
+                    for i in $(seq "$size"); do
+                        # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
+                        suffix="$(printf "%3s" "$i" | tr " " 0)"
+                        if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z.$suffix" "$target/$exe.7z.$suffix"; then
+                            static_build_log warn "Download failure in $exe.7z.$suffix" >&2
+                            return 1
+                        fi
+                    done
+
+                    static_build_log info "Using p7zd to decompress: $target/$exe.7z.001"
+                    cat $target/$exe.7z.0* > $exe.7z
+                    p7zd x "$exe.7z" 1>/dev/null 2>/dev/null
+                fi && chmod +x "$exe" \
+                    && static_build_log info "Finish file decompress and chmod."
+            }
+        )
+    fi && return 0
+
+    return 1
+}
 
 
 ___x_cmd_pkg_download___check_hashsum(){
