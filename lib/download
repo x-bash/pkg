@@ -75,11 +75,11 @@ ___x_cmd_pkg_download_file_from_static_build(){
 
     target="${ball%/*}"
 
-    ___x_cmd_pkg_download_file___from_static_build "$repo" "$exe"
+    ___x_cmd_pkg_download_file___from_static_build_and_deflate "$repo" "$exe"
 }
 
 
-___x_cmd_pkg_download_file___from_static_build(){
+___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     local IFS='
     '
     local repo="${1:?Provide repo name, like p7zip}"
@@ -143,7 +143,6 @@ ___x_cmd_pkg_download_file___from_static_build(){
             }
         )
     fi && return 0
-
     return 1
 }
 
