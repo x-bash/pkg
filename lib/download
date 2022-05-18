@@ -18,7 +18,7 @@ ___x_cmd_pkg_download(){
     pkg:debug "Download package url_list: $url_list ball: $ball"
 
     local static_build
-    static_build="$(___x_cmd_pkg___attr "$@" "$osarch" static-build)"
+    ___x_cmd_pkg___attr "$@" "$osarch" static-build
     if [ -n "$static_build" ]; then
         ___x_cmd_pkg_download_file___from_static_build_and_deflate "${static_build%/*}" "${static_build#*/}"
         return
@@ -39,9 +39,9 @@ ___x_cmd_pkg_download(){
     fi
     while read -r url; do
         # TODO: ___x_cmd_httpget support 302
-        # ___x_cmd_httpget "$url" "$ball" || {
         pkg:info "Download package from $url to $ball"
-        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
+        # curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
+        ___x_cmd_httpget "$url" "$ball" || {
             pkg:warn "Fail to download from $url"
             continue
         }
