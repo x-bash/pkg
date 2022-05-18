@@ -6,6 +6,11 @@ ___x_cmd_pkg_install(){
         pkg:info "Running $script_path after download package"
         . "$script_path"
     else
+        local static_build
+        static_build="$(___x_cmd_pkg___attr "$@" "$osarch" static-build)"
+        if [ -n "$static_build" ]; then
+            return
+        fi
         ___x_cmd_pkg_install___unzip "$@" || return
     fi
 }
