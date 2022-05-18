@@ -56,16 +56,6 @@ A
 
 }
 
-___x_cmd_pkg_download_file(){
-    local url="${1:?Provide url}"
-    local ball="${2:?Provide ball}"
-    case "$url" in
-        static-build://*)       ___x_cmd_pkg_download_file_from_http "$url" "$ball" ;;
-        http://*|https://*)     ___x_cmd_pkg_download_file_from_static_build "$url" "$ball" ;;
-        *)                      pkg:error "Exit because of unknown URL: $url." >&2 ;;
-    esac
-}
-
 ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     local IFS='
     '
