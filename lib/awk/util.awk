@@ -17,7 +17,7 @@ function pkg_init_table( jobj, table, table_kp,
 
     pkg_copy_table( jobj, jqu(pkg_name) SUBSEP jqu("meta"), table, table_kp )
 
-    pkg_define_version( table, pkg_name, table_kp)
+    pkg_modify_table_by_meta_rule( table, pkg_name, table_kp)
 
     _final_version = table_version( table, pkg_name)
     if ( _final_version != "" ) {
@@ -29,8 +29,8 @@ function pkg_init_table( jobj, table, table_kp,
     pkg_add_table( "arch", _os_arch[2], table, table_kp )
 }
 
-function pkg_define_version( table, pkg_name, table_kp,          version_osarch, _rule_kp, _rule_l, i ,k, _kpat){
-    version_osarch = table_version_osarch( table, pkg_name ) # May define version or osarch (as default) in the meta file
+function pkg_modify_table_by_meta_rule( table, pkg_name, table_kp,          _version_osarch, _rule_kp, _rule_l, i ,k, _kpat){
+    _version_osarch = table_version_osarch( table, pkg_name ) # May define version or osarch (as default) in the meta file
 
     _rule_kp = pkg_kp( pkg_name, "meta", "rule" )
     _rule_l = jobj[ _rule_kp L ]
@@ -38,12 +38,26 @@ function pkg_define_version( table, pkg_name, table_kp,          version_osarch,
         k = jobj[ _rule_kp, i ]
         _kpat = juq( k )
         gsub("\\*", "[^/]+", _kpat)
-        if (match(version_osarch, "^" _kpat)) {
+        if ( match( _version_osarch, "^" _kpat ) ) {
             pkg_copy_table( jobj, _rule_kp SUBSEP k, table, table_kp )
-            version_osarch = table_version_osarch( table, pkg_name )
+            _version_osarch = table_version_osarch( table, pkg_name )
         }
     }
+}
 
+function pkg_get_version_or_head_version( jobj, table, pkg_name,            _final_version, l ){
+    _final_version = table_version( table, pkg_name )
+    _final_version = juq(_final_version)
+    if ( _final_version != "" ){
+        print _final_version
+    } else {
+        l = jobj[ jqu(pkg_name), jqu("version") L ]
+        if (l <= 0 ) {
+            print "No version found." >"/dev/stderr"
+        } else {
+            print juq(jobj[ jqu( pkg_name ), jqu("version"), 1 ])
+        }
+    }
 }
 
 function pkg_add_table( k, v, table, table_kp,  l ){

@@ -2,6 +2,7 @@
 . ./lib/util
 . ./lib/install
 . ./lib/download
+. ./lib/xbin
 # ___x_cmd_pkg___attr_code java "" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" hook.setup
 # ___x_cmd_pkg___all_info java "18-open" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" "install"
 # ___x_cmd_pkg___get_script_path java "18-open" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" "install"
@@ -13,3 +14,5 @@
 # ___x_cmd_pkg___default_version node
 # ___x_cmd_pkg_xbin deno "v1.21.1"
 # ___x_cmd_pkg___get_script_path deno "v1.21.1" "" "post-install"
+# ___x_cmd_pkg___default_version deno
+# ___x_cmd_pkg_xbin_init uninstall
