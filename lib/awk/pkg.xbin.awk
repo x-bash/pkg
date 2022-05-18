@@ -7,14 +7,15 @@ function code( funcname, binpath ){
     print "___x_cmd_" funcname "(){"
     print "  " INSTALL_PATH "/" PKG_NAME "/" binpath " \"$@\""
     print "}"
+    exit(0)
 }
 
 END {
     prefix = jqu(PKG_NAME) SUBSEP jqu("xbin")
 
     if ( "{" != table[ prefix ] ) {
-        print code( PKG_NAME "_xbin", table_eval(table, PKG_NAME, table[ prefix ] ) ) # DO Not unquote
-        exit(0)
+        idx = index(PKG_NAME, "/")
+        print code( substr(PKG_NAME, idx + 1), table_eval(table, PKG_NAME, table[ prefix ] ) ) # DO Not unquote
     }
 
     # print "Not implemented YET" >"/dev/stderr"
@@ -27,12 +28,13 @@ END {
 
         k = table[ prefix, i ]
         v = table[ prefix, k ]
+        k = juq(k)
 
-        if ( "{" != v ) {
-            print code( PKG_NAME "_" juq(k), table_eval(table, PKG_NAME, v ) )
+        if (( k == BIN_MOD_NAME ) && ( "{" != v ) && ( "\"\"" != v )) {
+            print code( k, table_eval(table, PKG_NAME, v ) )
             continue
         }
-        # TODO: will introduce setpath
     }
 
+    exit(1)
 }
