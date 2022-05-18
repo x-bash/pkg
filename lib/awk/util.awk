@@ -38,7 +38,6 @@ function pkg_modify_table_by_meta_rule( table, pkg_name, table_kp,          _ver
         _kpat = juq( k )
         gsub("\\*", "[^/]+", _kpat)
         if ( match( _version_osarch, "^" _kpat ) ) {
-            PKG_RULE = k
             pkg_copy_table( jobj, _rule_kp SUBSEP k, table, table_kp )
             _version_osarch = table_version_osarch( table, pkg_name )
         }
@@ -130,7 +129,6 @@ function pkg_eval_str( str, table, pkg_name,            _attempt, t, p, _newstr 
         if ( ++_attempt > 100 ) exit_msg( sprintf( "Exit because replacement attempts more than 100[%s]: %s", _attempt, str ) )
         p = substr( str, RSTART+2, RLENGTH-3 )
         t = table[ pkg_name SUBSEP jqu(p) ]
-        if ( t == "" ) t = table[ pkg_name SUBSEP PKG_RULE SUBSEP jqu(p) ]
         if ( t == "" ) exit_msg( sprintf("Unknown pattern[%s] from str: %s", (pkg_name SUBSEP jqu(p)), str) )
         _newstr = substr( str, 1, RSTART-1 ) juq(t) substr( str, RSTART + RLENGTH )
         if (_newstr == str)  exit_msg( sprintf("Logic error. Target not changed: %s", str) )

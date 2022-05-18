@@ -16,3 +16,4 @@
 # ___x_cmd_pkg___get_script_path deno "v1.21.1" "" "post-install"
 # ___x_cmd_pkg___default_version deno
 # ___x_cmd_pkg_xbin_init go
+# ___x_cmd_pkg___list jq 1.6-dirty "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" url.cn
