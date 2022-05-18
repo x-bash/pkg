@@ -63,3 +63,4 @@ ___x_cmd_pkg_version(){
         -f "awk/util.awk" \
         -f "awk/pkg.lsversion.awk"
 }
+xrc setmain ___x_cmd_pkg
