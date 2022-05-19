@@ -5,7 +5,7 @@
 function code( funcname, binpath ){
     gsub("/", "_", funcname)
     print "___x_cmd_" funcname "(){"
-    print "  " INSTALL_PATH "/" PKG_NAME "/" binpath " \"$@\""
+    print "  ." INSTALL_PATH "/" binpath " \"$@\""
     print "}"
     exit(0)
 }

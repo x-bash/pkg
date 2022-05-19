@@ -2,12 +2,16 @@
 # Section: init table
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
-    _rule_kp, _rule_l, i, k, _kpat, _os_arch, _final_version ){
+    _rule_kp, _rule_l, i, k, _kpat, _os_arch, _final_version, _idx ){
 
     # Predefined env variables
     pkg_add_table( "sb_branch", "main", table, table_kp )
 
     pkg_add_table( "osarch", osarch, table, table_kp )
+    _idx = index( osarch, "/" )
+    pkg_add_table( "os", substr( osarch, 1, _idx-1 ), table, table_kp )
+    pkg_add_table( "arch", substr( osarch, _idx+1 ), table, table_kp )
+
     pkg_add_table( "version", version, table, table_kp )
 
     pkg_add_table( "sb_repo", pkg_name, table, table_kp )
@@ -129,7 +133,7 @@ function pkg_eval_str( str, table, pkg_name,            _attempt, t, p, _newstr 
         if ( ++_attempt > 100 ) exit_msg( sprintf( "Exit because replacement attempts more than 100[%s]: %s", _attempt, str ) )
         p = substr( str, RSTART+2, RLENGTH-3 )
         t = table[ pkg_name SUBSEP jqu(p) ]
-        if ( t == "" ) exit_msg( sprintf("Unknown pattern[%s] from str: %s", (pkg_name SUBSEP jqu(p)), str) )
+        # if ( t == "" ) exit_msg( sprintf("Unknown pattern[%s] from str: %s", (pkg_name SUBSEP jqu(p)), str) )
         _newstr = substr( str, 1, RSTART-1 ) juq(t) substr( str, RSTART + RLENGTH )
         if (_newstr == str)  exit_msg( sprintf("Logic error. Target not changed: %s", str) )
         str = _newstr
