@@ -2,11 +2,8 @@
 
 # Provide
 
-function code( funcname, binpath ){
-    gsub("/", "_", funcname)
-    print "___x_cmd_" funcname "(){"
-    print "  " INSTALL_PATH "/" PKG_NAME "/" binpath " \"$@\""
-    print "}"
+function print_binpath( binpath ){
+    print INSTALL_PATH "/" binpath 
     exit(0)
 }
 
@@ -14,15 +11,9 @@ END {
     prefix = jqu(PKG_NAME) SUBSEP jqu("xbin")
 
     if ( "{" != table[ prefix ] ) {
-        idx = index(PKG_NAME, "/")
-        print code( substr(PKG_NAME, idx + 1), table_eval(table, PKG_NAME, table[ prefix ] ) ) # DO Not unquote
+        print print_binpath( table_eval(table, PKG_NAME, table[ prefix ] ) )
     }
 
-    # print "Not implemented YET" >"/dev/stderr"
-
-    # exit(1)
-
-    # TODO: Will Implemente in the future
     l = table[ prefix L ]
     for (i=1; i<=l; ++i) {
 
@@ -31,7 +22,7 @@ END {
         k = juq(k)
 
         if (( k == BIN_MOD_NAME ) && ( "{" != v ) && ( "\"\"" != v )) {
-            print code( k, table_eval(table, PKG_NAME, v ) )
+            print print_binpath( table_eval(table, PKG_NAME, v ) )
             continue
         }
     }

@@ -25,6 +25,7 @@ ___x_cmd_pkg(){
         *=)             ___x_cmd_pkg_exec "$@" ;;
 
         xbin)           shift; ___x_cmd_pkg_xbin "$@" ;;
+        _x_cmd_advise_json) printf "{}";;
 
         *)              return 1
     esac
