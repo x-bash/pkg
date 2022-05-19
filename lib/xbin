@@ -19,6 +19,7 @@ ___x_cmd_pkg_xbin_path(){
     if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
         INSTALL_PATH="$HOME/.x-cmd/.bin/$sb_app"
     fi
+    pkg:debug "xbin INSTALL_PATH: $INSTALL_PATH"
     ___x_cmd_pkg___all_info "$pkg_name" "${version}" | awk \
         -v INSTALL_PATH="$INSTALL_PATH" \
         -v BIN_MOD_NAME="${bin_mod_name:-$pkg_name}" \
