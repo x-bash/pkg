@@ -121,7 +121,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
                     && pkg:info "Finish file decompress and chmod."
             }
         )
-    fi && return 0
+    fi && printf "%s" "$target/$exe" && return 0
     return 1
 }
 
