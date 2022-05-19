@@ -17,10 +17,11 @@ ___x_cmd_pkg_download(){
     local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
     pkg:debug "Download package url_list: $url_list ball: $ball"
 
-    local static_build
-    ___x_cmd_pkg___attr "$@" "$osarch" static-build
-    if [ -n "$static_build" ]; then
-        ___x_cmd_pkg_download_file___from_static_build_and_deflate "${static_build%/*}" "${static_build#*/}"
+    local sb_repo
+    local sb_app
+    ___x_cmd_pkg___static_build_attr "$@" "$osarch"
+    if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
+        ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app"
         return
     fi
 
@@ -61,6 +62,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     '
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:-${repo}}"
+    pkg:debug "Download from static-build. repo: $repo app: $app"
 
     local target="$HOME/.x-cmd/.bin/$app"
     mkdir -p "$target"
@@ -78,11 +80,11 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     # Rely
     if [ ! -f "$target/$exe" ]; then
 
-        static_build_log info "Downloading: ${repo}/bin/$exe.7z"
+        pkg:info "Downloading: ${repo}/bin/$exe.7z"
 
         if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z" "$target/$exe.7z"; then
-            static_build_log warn "Download failure: $repo/main bin/$exe.7z"
-            static_build_log warn "File Not Found. Perhaps the platform is NOT supported: $exe"
+            pkg:warn "Download failure: $repo/main bin/$exe.7z"
+            pkg:warn "File Not Found. Perhaps the platform is NOT supported: $exe"
             return 1
         fi
 
@@ -107,16 +109,16 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
                         if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z.$suffix" "$target/$exe.7z.$suffix"; then
-                            static_build_log warn "Download failure in $exe.7z.$suffix" >&2
+                            pkg:warn "Download failure in $exe.7z.$suffix" >&2
                             return 1
                         fi
                     done
 
-                    static_build_log info "Using p7zd to decompress: $target/$exe.7z.001"
+                    pkg:info "Using p7zd to decompress: $target/$exe.7z.001"
                     cat $target/$exe.7z.0* > $exe.7z
                     p7zd x "$exe.7z" 1>/dev/null 2>/dev/null
                 fi && chmod +x "$exe" \
-                    && static_build_log info "Finish file decompress and chmod."
+                    && pkg:info "Finish file decompress and chmod."
             }
         )
     fi && return 0

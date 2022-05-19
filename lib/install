@@ -6,9 +6,10 @@ ___x_cmd_pkg_install(){
         pkg:info "Running $script_path after download package"
         . "$script_path"
     else
-        local static_build
-        ___x_cmd_pkg___attr "$@" "$osarch" static-build
-        if [ -n "$static_build" ]; then
+        local sb_repo
+        local sb_app
+        ___x_cmd_pkg___static_build_attr "$@" "$osarch"
+        if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
             return
         fi
         ___x_cmd_pkg_install___unzip "$@" || return
