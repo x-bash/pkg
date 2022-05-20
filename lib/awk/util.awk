@@ -2,16 +2,12 @@
 # Section: init table
 function pkg_init_table( jobj, table, table_kp,
     pkg_name, version, osarch,
-    _rule_kp, _rule_l, i, k, _kpat, _os_arch, _final_version, _idx ){
+    _rule_kp, _rule_l, i, k, _kpat, _os_arch, _final_version ){
 
     # Predefined env variables
     pkg_add_table( "sb_branch", "main", table, table_kp )
 
     pkg_add_table( "osarch", osarch, table, table_kp )
-    _idx = index( osarch, "/" )
-    pkg_add_table( "os", substr( osarch, 1, _idx-1 ), table, table_kp )
-    pkg_add_table( "arch", substr( osarch, _idx+1 ), table, table_kp )
-
     pkg_add_table( "version", version, table, table_kp )
 
     pkg_add_table( "sb_repo", pkg_name, table, table_kp )
@@ -41,6 +37,7 @@ function pkg_modify_table_by_meta_rule( table, pkg_name, table_kp,          _ver
         k = jobj[ _rule_kp, i ]
         _kpat = juq( k )
         gsub("\\*", "[^/]+", _kpat)
+
         if ( match( _version_osarch, "^" _kpat ) ) {
             pkg_copy_table( jobj, _rule_kp SUBSEP k, table, table_kp )
             _version_osarch = table_version_osarch( table, pkg_name )

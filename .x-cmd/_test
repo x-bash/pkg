@@ -16,13 +16,15 @@
 # ___x_cmd_pkg___get_script_path deno "v1.21.1" "" "post-install"
 # ___x_cmd_pkg___default_version deno
 # ___x_cmd_pkg_xbin_init go
-# ___x_cmd_pkg_xbin_init go
-# ___x_cmd_pkg___list jq 1.6-dirty "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" url.cn
+# ___x_cmd_pkg___list jq 1.6-dirty "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" url
 # ___x_cmd_pkg download sqlite 1.6-dirty
 # x pkg install nping
 # x pkg xbin path nmap v8.3.2
-x pkg xbin init java
+# x pkg xbin init java
+# x pkg install p7zip
+# x pkg xbin init 7z
 # x pkg install java 18-open
 # ___x_cmd_pkg install nmap v8.3.2
 #  ___x_cmd_pkg___static_build_attr_code sqlite 1.6-dirty linux/x64
+x pkg install python py37_4.11.0
 

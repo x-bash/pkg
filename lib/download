@@ -5,34 +5,33 @@
 
 ___x_cmd_pkg_download(){
     local pkg_name="${1:?Provide pkg name}"
-    local version="${2:?Provide version}"
+    local version="${2:-$(___x_cmd_pkg___default_version "$pkg_name")}"
     local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
-
-    local url_list
-    local file_suffix
-    url_list="$(___x_cmd_pkg___list "$@" "$osarch" "url.${___X_CMD_WHICHNET:-_}" )"
-    ___x_cmd_pkg___attr "$@" "$osarch" file_suffix
-
-    local url
-    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
-    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name"
 
     local sb_repo
     local sb_app
-    ___x_cmd_pkg___static_build_attr "$@" "$osarch"
+    ___x_cmd_pkg___static_build_attr "$pkg_name" "$version" "$osarch"
     if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
         ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app"
         return
     fi
-    pkg:debug "Download package url_list: $url_list ball: $ball"
+
+    local url_list
+    local file_suffix
+    url_list="$(___x_cmd_pkg___list "$pkg_name" "$version" "$osarch" "url.${___X_CMD_WHICHNET:-_}" )"
+    ___x_cmd_pkg___attr "$pkg_name" "$version" "$osarch" file_suffix
+
+    local url
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name/$version.$file_suffix"
+    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$pkg_name"
+    pkg:debug "Download package: $pkg_name version: $version osarch: $osarch url_list: $url_list ball: $ball"
 
     local md5
     local sha1
     local sha256
     local sha512
 
-    ___x_cmd_pkg___attr "$@" "$osarch" "md5,sha1,sha256,sha512"
-
+    ___x_cmd_pkg___attr "$pkg_name" "$version" "$osarch" "md5,sha1,sha256,sha512"
     if [ -f "$ball" ]; then
         ! ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512" || return 0
 
@@ -63,7 +62,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     '
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:-${repo}}"
-    pkg:debug "Download from static-build. repo: $repo app: $app"
+    pkg:debug "Download static-build. repo: $repo app: $app"
 
     local target="$HOME/.x-cmd/.bin/$app"
     mkdir -p "$target"
@@ -75,14 +74,12 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
 
     local exe
     case "$osname" in
-        win)    exe=$repo.x64.exe        ;;
-        *)      exe=$repo.${osname}.${arch}  ;;
+        win)    exe=$app.x64.exe        ;;
+        *)      exe=$app.${osname}.${arch}  ;;
     esac
     # Rely
     if [ ! -f "$target/$exe" ]; then
-
         pkg:info "Downloading: ${repo}/bin/$exe.7z"
-
         if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z" "$target/$exe.7z"; then
             pkg:warn "Download failure: $repo/main bin/$exe.7z"
             pkg:warn "File Not Found. Perhaps the platform is NOT supported: $exe"
