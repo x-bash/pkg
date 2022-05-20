@@ -12,7 +12,7 @@ ___x_cmd_pkg_download(){
     local sb_app
     ___x_cmd_pkg___static_build_attr "$pkg_name" "$version" "$osarch"
     if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
-        ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app"
+        ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app" "$version"
         return
     fi
 
@@ -62,9 +62,11 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     '
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:-${repo}}"
+    local version="${3:?Provide version}"
+
     pkg:debug "Download static-build. repo: $repo app: $app"
 
-    local target="$HOME/.x-cmd/.bin/$app"
+    local target="$___X_CMD_PKG_INSTALL_PATH/$app/$version"
     mkdir -p "$target"
 
     local arch
@@ -79,9 +81,9 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     esac
     # Rely
     if [ ! -f "$target/$exe" ]; then
-        pkg:info "Downloading: ${repo}/bin/$exe.7z"
-        if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z" "$target/$exe.7z"; then
-            pkg:warn "Download failure: $repo/main bin/$exe.7z"
+        pkg:info "Downloading: $repo/$app/$version/$exe.7z"
+        if ! ___x_cmd_curl_gitx static-build "${repo}" main "$app/$version/$exe.7z" "$target/$exe.7z"; then
+            pkg:warn "Download failure: $repo/main $app/$version/$exe.7z"
             pkg:warn "File Not Found. Perhaps the platform is NOT supported: $exe"
             return 1
         fi
@@ -106,7 +108,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
-                        if ! ___x_cmd_curl_gitx static-build "${repo}" main "bin/$exe.7z.$suffix" "$target/$exe.7z.$suffix"; then
+                        if ! ___x_cmd_curl_gitx static-build "${repo}" main "$app/$version/$exe.7z.$suffix" "$target/$exe.7z.$suffix"; then
                             pkg:warn "Download failure in $exe.7z.$suffix" >&2
                             return 1
                         fi
