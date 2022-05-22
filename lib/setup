@@ -10,7 +10,7 @@ ___x_cmd_pkg_setup___min(){
     local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
 
     local script_path
-    if script_path="$(___x_cmd_pkg___get_script_path "$pkg_name" "$version" "$osarch" "" setup)"; then
+    if script_path="$(___x_cmd_pkg___get_script_path "$pkg_name" "$version" "$osarch" setup)"; then
         pkg:debug "Setup running $script_path"
         . "${script_path}"
     else
