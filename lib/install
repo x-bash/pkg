@@ -51,7 +51,6 @@ ___x_cmd_pkg_install(){
     else
         pkg:info "Uninstalling $pkg_name $version"
         x rmrf "$install_path"
-        x path rm "$install_path/bin"
     fi
  }
 
