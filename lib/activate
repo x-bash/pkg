@@ -1,6 +1,5 @@
 
 ___x_cmd_pkg_activate(){
-    # If not installed, setup
     ___x_cmd_pkg_activate___min "$@"
 }
 
