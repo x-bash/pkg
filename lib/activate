@@ -15,6 +15,10 @@ ___x_cmd_pkg_activate___min(){
     else
         ___x_cmd_pkg_activate___min_default "$pkg_name" "$version"
     fi
+
+    ___X_CMD_PKG_ACTIVATE___LIST="$___X_CMD_PKG_ACTIVATE___LIST
+$pkg_name=$version
+"
 }
 
 ___x_cmd_pkg_activate___min_default(){

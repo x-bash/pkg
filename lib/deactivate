@@ -15,6 +15,16 @@ ___x_cmd_pkg_deactivate___min(){
     else
         ___x_cmd_pkg_deactivate___min_default "$pkg_name" "$version"
     fi
+
+    local tmp="${___X_CMD_PKG_ACTIVATE___LIST#*
+${pkg_name}=*
+}"
+
+    if [ "$tmp" != "$___X_CMD_PKG_ACTIVATE___LIST" ]; then
+        ___X_CMD_PKG_ACTIVATE___LIST="${tmp}${___X_CMD_PKG_ACTIVATE___LIST%%
+${pkg_name}=*
+}"
+    fi
 }
 
 ___x_cmd_pkg_deactivate___min_default(){
