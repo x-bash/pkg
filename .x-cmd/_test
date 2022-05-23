@@ -30,4 +30,4 @@ x pkg install python py37_4.11.0
 x pkg ls go
 x pkg ls i go
 x pkg ls a go
-x pkg xbin init jq
+x yq
