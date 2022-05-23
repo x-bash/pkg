@@ -26,3 +26,7 @@
 # ___x_cmd_pkg install nmap v8.3.2
 #  ___x_cmd_pkg___static_build_attr_code sqlite 1.6-dirty linux/x64
 
+x pkg ls go
+x pkg ls i go
+x pkg ls a go
+x pkg xbin init jq
