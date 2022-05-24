@@ -41,7 +41,7 @@ ___x_cmd_pkg_xbin_init(){
 *}"
 
     local version="${2:-$(___x_cmd_pkg___default_version ${pkg_name})}"
-    local bin_path="${bin_path:-$(___x_cmd_pkg_xbin_path "$pkg_name" "$version")}"
+    local bin_path="$(___x_cmd_pkg_xbin_path "$pkg_name" "$version")"
     pkg:debug "xbin_init. bin_mod_name: $bin_mod_name package: $pkg_name $version binpath: $bin_path"
 
     if ! [ -f "$bin_path" ]; then
