@@ -78,7 +78,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
 
     local exe
     case "$osname" in
-        win)    exe=$app.x64.exe        ;;
+        win)    exe=$app.${osname}.${arch}.exe        ;;
         *)      exe=$app.${osname}.${arch}  ;;
     esac
     # Rely
