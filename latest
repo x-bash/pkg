@@ -38,7 +38,8 @@ ___x_cmd_pkg(){
 x log init pkg
 
 xrc:mod pkg/lib/sb
-xrc:mod:lib pkg     which util ls ll ls_installed download install xbin activate deactivate
+xrc:mod:lib pkg     which util ls ll ls_installed xbin \
+    mutate/download mutate/install  mutate/activate mutate/deactivate
 
 ___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
 ___X_CMD_PKG_DOWNLOAD_PATH="$___X_CMD_ROOT_TMP/pkg/download"
