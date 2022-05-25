@@ -25,9 +25,6 @@ ___x_cmd_pkg(){
         activate)               shift; ___x_cmd_pkg_activate "$@" ;;
         deactivate)             shift; ___x_cmd_pkg_deactivate "$@" ;;
 
-        # x pkg exec python=
-        *=)                     ___x_cmd_pkg_exec "$@" ;;
-
         xbin)                   shift; ___x_cmd_pkg_xbin "$@" ;;
         _x_cmd_advise_json)     printf "{}";;
 
