@@ -138,10 +138,10 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
 ___x_cmd_pkg_download___check_hashsum(){
     local filepath="$1"
 
-    [ -z "$2" ]         ||  [ "$(___x_cmd_md5 "$filepath")" = "$2" ]            ||      return 1
-    [ -z "$3" ]         ||  [ "$(___x_cmd_sha1 "$filepath")" = "$3" ]           ||      return 1
-    [ -z "$4" ]         ||  [ "$(___x_cmd_sha256 "$filepath")" = "$4" ]         ||      return 1
-    [ -z "$5" ]         ||  [ "$(___x_cmd_sha512 "$filepath")" = "$5" ]         ||      return 1
+    [ -z "$2" ]  ||  [ "$(___x_cmd_md5       "$filepath")" = "$2" ]     ||      return 1
+    [ -z "$3" ]  ||  [ "$(___x_cmd_sha1      "$filepath")" = "$3" ]     ||      return 1
+    [ -z "$4" ]  ||  [ "$(___x_cmd_sha256    "$filepath")" = "$4" ]     ||      return 1
+    [ -z "$5" ]  ||  [ "$(___x_cmd_sha512    "$filepath")" = "$5" ]     ||      return 1
 
     return 0
 }
