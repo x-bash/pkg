@@ -136,7 +136,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
 
 
 ___x_cmd_pkg_download___check_hashsum(){
-    local filepath="$1"
+    local filepath="${1:?Please priovide filepath}"
 
     [ -z "$2" ]  ||  [ "$(___x_cmd_md5       "$filepath")" = "$2" ]     ||      return 1
     [ -z "$3" ]  ||  [ "$(___x_cmd_sha1      "$filepath")" = "$3" ]     ||      return 1
