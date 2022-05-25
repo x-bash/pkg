@@ -9,7 +9,7 @@ ___x_cmd_pkg(){
         update)                 shift; ___x_cmd_pkg_update "$@" ;;
 
         version)                shift; ___x_cmd_pkg_version "$@" ;;
-        default_version)        shift; ___x_cmd_pkg___default_version "$@" ;;
+        default_version)        shift; ___x_cmd_pkg_default_version "$@" ;;
         ll)                     shift; ___x_cmd_pkg_ll "$@" ;;
 
         # x pkg which node=v12

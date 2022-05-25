@@ -90,7 +90,7 @@ ___x_cmd_pkg___list(){
 }
 
 
-___x_cmd_pkg___default_version(){
+___x_cmd_pkg_default_version(){
 
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
