@@ -46,7 +46,7 @@ ___x_cmd_staticbin_download(){
     local result
     if ! result="$(
         printf "%s\n" "$fun_url" | while read -r url; do
-        if ___x_cmd_httpget "$url" "$cache/${fun_url##*/}" && ___x_cmd_zuz_uz "$cache/${fun_url##*/}" "$cache"; then
+        if ___x_cmd_httpget "$url" "$cache/${fun_url##*/}" && x uz "$cache/${fun_url##*/}" "$cache"; then
             return 0
         else
             printf "%s\n" "$url"
