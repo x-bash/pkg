@@ -66,7 +66,7 @@ A
 
 ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     local IFS='
-    '
+'
     local repo="${1:?Provide repo name, like p7zip}"
     local app="${2:-${repo}}"
     local version="${3:?Provide version}"
