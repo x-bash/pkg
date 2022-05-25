@@ -49,6 +49,7 @@ ___x_cmd_pkg_download(){
         # TODO: ___x_cmd_httpget support 302
         # ___x_cmd_httpget "$url" "$ball" || {
         pkg:info "Download $pkg_name $version from $url to $ball"
+        # TODO: x curl
         curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
             pkg:warn "Fail to download from $url"
             continue
