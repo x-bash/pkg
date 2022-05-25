@@ -76,16 +76,18 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     local target="$___X_CMD_PKG_INSTALL_PATH/$repo/$version"
     mkdir -p "$target"
 
-    local arch
-    arch="$(os arch)"
-    local osname
-    osname="$(os name)"
+    local osarch
+    osarch="${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}"
+
+    local arch="${osarch#*/}"
+    local osname="${osarch%/*}"
 
     local exe
     case "$osname" in
-        win)    exe=$app.${osname}.${arch}.exe        ;;
-        *)      exe=$app.${osname}.${arch}  ;;
+        win)        exe=$app.${osname}.${arch}.exe          ;;
+        *)          exe=$app.${osname}.${arch}              ;;
     esac
+
     # Rely
     if [ ! -f "$target/$exe" ]; then
         pkg:info "Downloading: $repo/$app/$version/$exe.7z to $target"
