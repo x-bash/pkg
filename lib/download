@@ -143,18 +143,10 @@ ___x_cmd_pkg_download___check_hashsum(){
     local sha256="$4"
     local sha512="$5"
 
-    if [ -n "$sha512" ]; then
-        [ "$(___x_cmd_sha512 "$filepath")" != "$sha512" ]
-    elif [ -n "$sha256" ]; then
-        [ "$(___x_cmd_sha256 "$filepath")" != "$sha256" ]
-    elif [ -n "$sha1" ]; then
-        [ "$(___x_cmd_sha1 "$filepath")" != "$sha1" ]
-    elif [ -n "$md5" ]; then
-        [ "$(___x_cmd_md5 "$filepath")" != "$md5" ]
-    else
-        # In the future, will return 1
-        x:warn "No checksum provided."
-        return 0
-    fi
+    [ -z "$sha512" ]    ||  [ "$(___x_cmd_sha512 "$filepath")" = "$sha512" ]     ||     return 1
+    [ -z "$sha256" ]    ||  [ "$(___x_cmd_sha256 "$filepath")" = "$sha256" ]     ||     return 1
+    [ -z "$sha1" ]      ||  [ "$(___x_cmd_sha1 "$filepath")" = "$sha1" ]         ||     return 1
+    [ -z "$md5" ]       ||  [ "$(___x_cmd_md5 "$filepath")" = "$md5" ]           ||     return 1
 
+    return 0
 }
