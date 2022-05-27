@@ -84,9 +84,8 @@ ___x_cmd_pkg_install___unzip(){
 
     local bin_path
     bin_path="$(___x_cmd_pkg_xbin_path "$name" "$version")"
-    if [ -x "$bin_path" ]; then
-        return 0
-    fi
+    [ ! -x "$bin_path" ] || return 0
+
     pkg:debug "bin_path: $bin_path"
 
     local file_suffix
