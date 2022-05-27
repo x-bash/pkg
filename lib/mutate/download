@@ -1,3 +1,4 @@
+# shellcheck    shell=sh            disable=SC2016,SC3043      # xrc
 
 # TODO: Multiple thread
 # TODO: Download Manager and more strategy
@@ -82,11 +83,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     local arch="${osarch#*/}"
     local osname="${osarch%/*}"
 
-    local exe
-    case "$osname" in
-        win)        exe=$app.${osname}.${arch}.exe          ;;
-        *)          exe=$app.${osname}.${arch}              ;;
-    esac
+    local exe="$app.${osname}.${arch}";  [ "$osname" != win ] || exe="${exe}.exe"
 
     # Rely
     if [ ! -f "$target/$exe" ]; then
