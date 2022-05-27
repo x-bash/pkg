@@ -98,7 +98,7 @@ ___x_cmd_pkg_install___unzip(){
     x uz "$ball" "$unpack_dir" || {
         pkg:warn "Fail to unzip $ball"
     }
-    x rmrf "$tgt" && mkdir -p "$tgt"
+    x rmrf "$tgt"; mkdir -p "$tgt"
     pkg:debug "Moving $unpack_dir to $tgt"
     mv -f "$unpack_dir"/*/* "$tgt"
     x rmrf "$unpack_dir"
