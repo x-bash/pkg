@@ -29,12 +29,12 @@ A
     fi
 
     local tmp="${___X_CMD_PKG_ACTIVATE___LIST#*
-${name}=*
+"${name}"=*
 }"
 
     if [ "$tmp" != "$___X_CMD_PKG_ACTIVATE___LIST" ]; then
         ___X_CMD_PKG_ACTIVATE___LIST="${___X_CMD_PKG_ACTIVATE___LIST%%
-${name}=*
+"${name}"=*
 }${tmp}"
     fi
 }
