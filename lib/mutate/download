@@ -21,10 +21,10 @@ ___x_cmd_pkg_download(){
 
     local url_list
     url_list="$(___x_cmd_pkg___list "$pkg_name" "$version" "$osarch" "url.${___X_CMD_WHICHNET:-_}" )"
-    [ -n "$url_list" ] || {
+    if [ -z "$url_list" ]; then
         pkg:error "Not found url."
         return 1
-    }
+    fi
 
     local file_suffix
     ___x_cmd_pkg___attr "$pkg_name" "$version" "$osarch" file_suffix
@@ -50,10 +50,10 @@ ___x_cmd_pkg_download(){
         # ___x_cmd_httpget "$url" "$ball" || {
         pkg:info "Download $pkg_name $version from $url to $ball"
         # TODO: x curl
-        curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball" || {
+        if ! curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" --output "$ball"; then
             pkg:warn "Fail to download from $url"
             continue
-        }
+        fi
 
         ! ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512" || return 0
 
