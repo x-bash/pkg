@@ -35,6 +35,5 @@ ___x_cmd_pkg___which_p7zip()(
 
 ___x_cmd_pkg_update(){
     x rmrf "$___X_CMD_ROOT_TMP/pkg/all.7z"
-    # 1 hour = 3600 seconds
-    ___x_cmd_pkg___which_p7zip 3600 || return # Force Update
+    ___x_cmd_pkg___which_p7zip - || return # Force Update
 }
