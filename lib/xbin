@@ -31,10 +31,10 @@ ___x_cmd_pkg_xbin_init(){
 
     ___x_cmd_pkg___which_p7zip || return
     if [ -z "$___X_CMD_PKG_BINMOD_MAP" ]; then
-        ___X_CMD_PKG_BINMOD_MAP="$(cat $___X_CMD_PKG_RAWPATH/binmod.txt)"
+        ___X_CMD_PKG_BINMOD_MAP="$(cat "$___X_CMD_PKG_RAWPATH/binmod.txt")"
     fi
 
-    local pkg_name="${___X_CMD_PKG_BINMOD_MAP#*:$bin_mod_name:}"
+    local pkg_name="${___X_CMD_PKG_BINMOD_MAP#*:"$bin_mod_name":}"
     if [ "$pkg_name" = "${___X_CMD_PKG_BINMOD_MAP}" ]; then
         pkg:error "Not found: ${bin_mod_name}"
         return 1
