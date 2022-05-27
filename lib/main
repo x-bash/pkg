@@ -10,7 +10,7 @@
 #         -f "$___X_CMD_ROOT_MOD/awk/pkg.lsversion.awk"
 # }
 
-___x_cmd_pkg___which_p7zip(){
+___x_cmd_pkg___which_p7zip()(
     ___x_cmd_mkdirp "$___X_CMD_PKG_RAWPATH"
 
     local p7zip="$___X_CMD_ROOT_TMP/pkg/all.7z"
@@ -30,5 +30,5 @@ ___x_cmd_pkg___which_p7zip(){
             x rmrf "$p7zip"
         fi
     fi
-}
+)
 
