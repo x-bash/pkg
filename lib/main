@@ -10,8 +10,6 @@
 #         -f "$___X_CMD_ROOT_MOD/awk/pkg.lsversion.awk"
 # }
 
-xrc p7zip
-
 ___x_cmd_pkg___which_p7zip(){
     ___x_cmd_mkdirp "$___X_CMD_PKG_RAWPATH"
 
@@ -27,7 +25,7 @@ ___x_cmd_pkg___which_p7zip(){
         pkg:info "Deflate the all.7z"
         x rmrf "$___X_CMD_PKG_RAWPATH"
         ___x_cmd_mkdirp "$___X_CMD_PKG_RAWPATH"
-        cd "${p7zip%/*}" && cp all.7z raw/all.7z && cd raw && p7zd x all.7z 1>/dev/null && rm all.7z
+        cd "${p7zip%/*}" && cp all.7z raw/all.7z && cd raw && x uz all.7z 1>/dev/null && rm all.7z
     )
 }
 
