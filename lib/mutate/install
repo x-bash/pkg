@@ -95,13 +95,14 @@ ___x_cmd_pkg_install___unzip(){
     local unpack_dir="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version"
     local tgt="$___X_CMD_PKG_INSTALL_PATH/$name/$version"
 
-    pkg:info "Unpack: $ball to $unpack_dir"
-    x uz "$ball" "$unpack_dir" || {
+    pkg:debug "Unpack: $ball to $unpack_dir"
+    x uz "$ball" "$unpack_dir" 1>/dev/null || {
         pkg:warn "Fail to unzip $ball"
     }
     x rmrf "$tgt"; mkdir -p "$tgt"
     pkg:debug "Moving $unpack_dir to $tgt"
     mv -f "$unpack_dir"/*/* "$tgt"
     x rmrf "$unpack_dir"
+    pkg:info "Finish unpack $name $version to $tgt"
 }
 
