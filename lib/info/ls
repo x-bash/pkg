@@ -43,10 +43,7 @@ ___x_cmd_pkg_ls_activated(){
     local locate_list
     osarch="$(___x_cmd_pkg_osarch)"
     locate_list="$(___x_cmd_pkg_ll)"
-    printf "%s\n" "$___X_CMD_PKG_ACTIVATE___LIST" | while read -r _line; do
-        [ -n "$_line" ] || continue
-        printf "%s\n" "$_line"
-    done | awk -v FS="=" \
+    awk -v FS="=" \
         -v OSARCH="$osarch" \
         -v LOCAL_LIST="$locate_list" \
         -v PKG_RAWPATH="$___X_CMD_PKG_RAWPATH" \
@@ -55,7 +52,9 @@ ___x_cmd_pkg_ls_activated(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/str.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk" <<A
+${___X_CMD_PKG_ACTIVATE___LIST}
+A
 }
 
 ___x_cmd_pkg_ls_all(){
