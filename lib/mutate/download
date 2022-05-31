@@ -28,18 +28,18 @@ ___x_cmd_pkg_download(){
     fi
 
     local file_suffix
-    ___x_cmd_pkg___attr "$name" "$version" "$osarch" file_suffix
-    local url
-    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version.$file_suffix"
-    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$name"
-    pkg:debug "Download $name $version url_list: $url_list ball: $ball"
-
     local md5
     local sha1
     local sha256
     local sha512
 
-    ___x_cmd_pkg___attr "$name" "$version" "$osarch" "md5,sha1,sha256,sha512"
+    ___x_cmd_pkg___attr "$name" "$version" "$osarch" "md5,sha1,sha256,sha512,file_suffix"
+    local url
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version.$file_suffix"
+    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$name"
+    pkg:debug "Download $name $version url_list: $url_list ball: $ball"
+
+
     if [ -f "$ball" ]; then
         ! ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512" || return 0
 
