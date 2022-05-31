@@ -63,4 +63,16 @@ ___x_cmd_pkg_ls_all(){
     cat "$___X_CMD_PKG_RAWPATH"/*/"$pkg_name/version.tt.json" | x ja '_[2]=="\"'"$(os name)/$(os arch)"'\""&&K=="\"sha\""{print uq(_[1])}'
 }
 
+___x_cmd_pkg_rawpath_name_ls()(
+    if ! [ -d "$___X_CMD_PKG_RAWPATH" ]; then return 0; fi
+    cd "$___X_CMD_PKG_RAWPATH"
+    local i
+    for i in */*; do
+        printf "%s\n" "${i#*/}"
+    done
+)
 
+___x_cmd_pkg_rawpath_version_advise_ls(){
+    local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
+    ___x_cmd_pkg_ls_all "${COMP_WORDS[${candidate_idx}]}"
+}
