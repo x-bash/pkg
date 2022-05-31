@@ -43,10 +43,7 @@ ___x_cmd_pkg_ls_activated(){
     local locate_list
     osarch="$(___x_cmd_pkg_osarch)"
     locate_list="$(___x_cmd_pkg_ll)"
-    printf "%s\n" "$___X_CMD_PKG_ACTIVATE___LIST" | while read -r _line; do
-        [ -n "$_line" ] || continue
-        printf "%s\n" "$_line"
-    done | awk -v FS="=" \
+    awk -v FS="=" \
         -v OSARCH="$osarch" \
         -v LOCAL_LIST="$locate_list" \
         -v PKG_RAWPATH="$___X_CMD_PKG_RAWPATH" \
@@ -55,7 +52,9 @@ ___x_cmd_pkg_ls_activated(){
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/str.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk" <<A
+${___X_CMD_PKG_ACTIVATE___LIST}
+A
 }
 
 ___x_cmd_pkg_ls_all(){
@@ -64,4 +63,16 @@ ___x_cmd_pkg_ls_all(){
     cat "$___X_CMD_PKG_RAWPATH"/*/"$pkg_name/version.tt.json" | x ja '_[2]=="\"'"$(os name)/$(os arch)"'\""&&K=="\"sha\""{print uq(_[1])}'
 }
 
+___x_cmd_pkg_rawpath_name_ls()(
+    if ! [ -d "$___X_CMD_PKG_RAWPATH" ]; then return 0; fi
+    cd "$___X_CMD_PKG_RAWPATH"
+    local i
+    for i in */*; do
+        printf "%s\n" "${i#*/}"
+    done
+)
 
+___x_cmd_pkg_rawpath_version_advise_ls(){
+    local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
+    ___x_cmd_pkg_ls_all "${COMP_WORDS[${candidate_idx}]}"
+}
