@@ -4,6 +4,7 @@ ___x_cmd_pkg_install(){
     x:trace pkg/install
     local name="${1:?Provide pkg name}"
     local version="${2:-$(___x_cmd_pkg_default_version "$name")}"
+    ! [ -d "$___X_CMD_PKG_INSTALL_PATH/$name/$version" ] || return 0
     local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
     [ -n "$version" ] || return
 
