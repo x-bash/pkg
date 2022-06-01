@@ -63,9 +63,9 @@ ___x_cmd_pkg_ls_all(){
     cat "$___X_CMD_PKG_RAWPATH"/*/"$pkg_name/version.tt.json" | x ja '_[2]=="\"'"$(os name)/$(os arch)"'\""&&K=="\"sha\""{print uq(_[1])}'
 }
 
-___x_cmd_pkg_rawpath_name_ls()(
+___x_cmd_pkg_rawpath_name_advise_ls()(
     if ! [ -d "$___X_CMD_PKG_RAWPATH" ]; then return 0; fi
-    cd "$___X_CMD_PKG_RAWPATH"
+    cd "$___X_CMD_PKG_RAWPATH" || exit
     local i
     for i in */*; do
         printf "%s\n" "${i#*/}"
