@@ -17,6 +17,7 @@ function pkg_print_installed_list( _pkg_name, _version,       _cat_meta_json, _c
 
     parse_pkg_meta_json( jobj, PKG_NAME, meta_json )
     parse_pkg_version_json( jobj, PKG_NAME, version_json )
+
     pkg_init_table( jobj, table, jqu(PKG_NAME), PKG_NAME, "", OSARCH )
 
     _final_version = pkg_get_version_or_head_version( jobj, table, PKG_NAME)
