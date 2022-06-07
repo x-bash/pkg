@@ -31,10 +31,18 @@ ___x_cmd_pkg_install(){
         if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
             return 0
         fi
-        unpack_way="$(___x_cmd_pkg_unpack_way "$pkg_name" "$version")"
-        [ unpack_way = "default" ] && ___x_cmd_pkg_install___default_unzip "$name" "$version" "$osarch"
-        [ unpack_way = "default" = "copy_to_targetdir_unzip" ] && 
-        ___x_cmd_pkg_install___copy_to_targetdir_unzip "$name" "$version" "$osarch" || return
+
+        local unpack_way
+        ___x_cmd_pkg___attr "$name" "$version" "$osarch" unpack_way
+
+        pkg:debug "name: $name version: $version osarch: $osarch file_suffix: $file_suffix ball: $ball bin_path: $bin_path unpack_way: $unpack_way "
+
+        if [ $unpack_way = "default" ]; then
+            ___x_cmd_pkg_install___default_unzip "$name" "$version" "$osarch" || return
+        elif
+            [ $unpack_way = "cp" ] || [ $unpack_way = "" ]; then
+            ___x_cmd_pkg_install___unzip "$name" "$version" "$osarch" || return
+        else
     fi
 }
 
@@ -82,7 +90,7 @@ ___x_cmd_pkg_reinstall(){
 
 
 # This is default
-___x_cmd_pkg_install___copy_to_targetdir_unzip(){
+___x_cmd_pkg_install___unzip(){
     local name="${1:?Provide pkg name}"
     local version="${2:?Provide version}"
     local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
@@ -111,21 +119,27 @@ ___x_cmd_pkg_install___copy_to_targetdir_unzip(){
 }
 
 ___x_cmd_pkg_install___default_unzip(){
-    :
-}
-
-___x_cmd_pkg_xbin_path(){
-    local pkg_name="${1:?Provide pkg name}"
+    local name="${1:?Provide pkg name}"
     local version="${2:?Provide version}"
+    local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
 
-    pkg:debug "INSTALL_PATH: $___X_CMD_PKG_INSTALL_PATH/$pkg_name/$version"
+    local bin_path
+    bin_path="$(___x_cmd_pkg_xbin_path "$name" "$version")"
+    [ ! -x "$bin_path" ] || return 0
 
-    ___x_cmd_pkg___all_info "$pkg_name" "$version" | awk \
-        -v INSTALL_PATH="$___X_CMD_PKG_INSTALL_PATH/$pkg_name/$version" \
-        -v BIN_MOD_NAME="${bin_mod_name:-$pkg_name}" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
-        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.xbin.awk"
+    pkg:debug "bin_path: $bin_path"
+
+    local file_suffix
+    ___x_cmd_pkg___attr "$name" "$version" "$osarch" file_suffix
+    local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version.$file_suffix"
+    local unpack_dir="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version"
+    local tgt="$___X_CMD_PKG_INSTALL_PATH/$name/$version/bin"
+
+    pkg:debug "Unpack: $ball to $unpack_dir"
+
+    pkg:info "Unpack: $ball to $tgt"
+    x uz "$ball" "$tgt"  || {
+        pkg:warn "Fail to unzip $ball"
+    }
+    pkg:info "Finish unpack $name $version to $tgt"
 }
