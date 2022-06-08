@@ -28,6 +28,7 @@ ___x_cmd_pkg_install(){
         local sb_repo sb_app
         ___x_cmd_pkg___static_build_attr "$name" "$version" "$osarch"
         if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
+            pkg:debug "static-build return 0"
             return 0
         fi
 
