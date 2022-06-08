@@ -26,12 +26,15 @@ xrc pkg
 # x pkg install java 18-open
 # ___x_cmd_pkg install nmap v8.3.2
 #  ___x_cmd_pkg___static_build_attr_code sqlite 1.6-dirty linux/x64
-x pkg install python py37_4.11.0
+# x pkg install python py37_4.11.0
 
 # x pkg ls go
 # x pkg ls i go
 # x pkg ls a go
 # x yq
-time (___x_cmd_pkg___list java 18-open "" url.cn)
-time (___x_cmd_pkg_default_version java)
-time (x pkg default_version java)
+# time (___x_cmd_pkg___list java 18-open "" url.cn)
+# time (___x_cmd_pkg_default_version java)
+# time (x pkg default_version java)
+# ___x_cmd_pkg___attr_code fd v8.3.2 win/x64 xbin
+# ___x_cmd_pkg___attr_code fd v8.3.2 win/x64 sha256
+___x_cmd_pkg___list julia 1.7.0-rc1 "" url.cn
