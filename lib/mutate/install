@@ -109,7 +109,7 @@ ___x_cmd_pkg_install___unzip(){
         x rmrf "$unpack_dir"
     else
         pkg:info "Unpack: $ball to $tgt"
-        x uz "$ball" "$tgt"  || {
+        x uz "$ball" "$tgt" 1>/dev/null || {
             pkg:warn "Fail to unzip $ball"
         }
     fi
