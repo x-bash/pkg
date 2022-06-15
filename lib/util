@@ -9,7 +9,6 @@ ___x_cmd_pkg___static_build_attr_code(){
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.static_build.awk"
@@ -26,7 +25,6 @@ ___x_cmd_pkg___attr_code(){
         -v QUERY="$QUERY" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.attr.awk"
@@ -42,7 +40,6 @@ ___x_cmd_pkg___get_script_path(){
         -v SCRIPT="$script" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.script.awk"
@@ -88,7 +85,6 @@ ___x_cmd_pkg___list(){
         -v EXPR="$expr" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.list.awk"
@@ -100,7 +96,6 @@ ___x_cmd_pkg_default_version(){
     ___x_cmd_pkg___all_info "$@" | awk \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.default_version.awk"

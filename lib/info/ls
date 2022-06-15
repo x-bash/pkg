@@ -29,7 +29,6 @@ ___x_cmd_pkg_ls_installed()(
         -v TH_THEME_COLOR="\\033[${___X_CMD_THEME_COLOR_CODE}m" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/str.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
@@ -51,7 +50,6 @@ ___x_cmd_pkg_ls_activated(){
         -v TH_THEME_COLOR="\\033[${___X_CMD_THEME_COLOR_CODE}m" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
-        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/str.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk" <<A
