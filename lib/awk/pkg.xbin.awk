@@ -17,7 +17,7 @@ END {
     l = table[ prefix L ]
     for (i=1; i<=l; ++i) {
 
-        k = table[ prefix, jqu(i) ]
+        k = table[ prefix, i ]
         v = table[ prefix, k ]
         k = juq(k)
 

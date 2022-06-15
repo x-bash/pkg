@@ -15,7 +15,7 @@ END {
     } else {
         l = table[ prefix L ]
         for (i=1; i<=l; ++i) {
-            _k = table[ prefix, jqu(i) ]
+            _k = table[ prefix, i ]
             print table_eval(table, PKG_NAME, table[ prefix, _k ] )
         }
     }

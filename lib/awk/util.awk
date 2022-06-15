@@ -34,7 +34,7 @@ function pkg_modify_table_by_meta_rule( table, pkg_name, table_kp,          _ver
     _rule_kp = pkg_kp( pkg_name, "meta", "rule" )
     _rule_l = jobj[ _rule_kp L ]
     for (i=1; i<=_rule_l; ++i) {
-        k = jobj[ _rule_kp, jqu(i) ]
+        k = jobj[ _rule_kp, i ]
         _kpat = juq( k )
         gsub("\\*", "[^/]+", _kpat)
         if ( match( _version_osarch, "^" _kpat ) ) {
@@ -54,7 +54,7 @@ function pkg_get_version_or_head_version( jobj, table, pkg_name,            _fin
         if (l <= 0 ) {
             return ""
         } else {
-            return juq(jobj[ jqu( pkg_name ), jqu("version"), "\"" 1 "\"" ])
+            return juq(jobj[ jqu( pkg_name ), jqu("version"), 1 ])
         }
     }
 }
@@ -63,7 +63,7 @@ function pkg_add_table( k, v, table, table_kp,  l ){
     k = jqu(k)
     if ( table[ table_kp, k ] == "" ) {
         table[ table_kp L ] = ( l = table[ table_kp L ] + 1 )
-        table[ table_kp, jqu(l) ] = k
+        table[ table_kp, l ] = k
     }
     table[ table_kp, k ] = jqu(v)
 }
@@ -80,11 +80,11 @@ function pkg_copy_table___dict( src_obj, src_kp, table, table_kp,       l, i, k,
     l = src_obj[ src_kp L ]
 
     for (i=1; i<=l; ++i) {
-        k = src_obj[ src_kp, jqu(i) ]
+        k = src_obj[ src_kp, i ]
         if (k == "\"rule\"") continue       # skip the rule
         if ( table[ table_kp, k ] == "" ) {
             table[ table_kp L ] = ( _l = table[ table_kp L ] + 1 )
-            table[ table_kp, jqu(_l) ] = k
+            table[ table_kp, _l ] = k
         }
         pkg_copy_table( src_obj, src_kp SUBSEP k, table, table_kp SUBSEP k )
     }
@@ -95,7 +95,7 @@ function pkg_copy_table___list( src_obj, src_kp, table, table_kp,       l, i, _l
     table[ table_kp L ] = l
 
     for (i=1; i<=l; ++i) {
-        pkg_copy_table( src_obj, src_kp SUBSEP jqu(i), table, table_kp SUBSEP jqu(i) )
+        pkg_copy_table( src_obj, src_kp SUBSEP i, table, table_kp SUBSEP i )
     }
 }
 # EndSection
