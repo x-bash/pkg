@@ -15,7 +15,7 @@ ___x_cmd_pkg_activate___min(){
     local script_path
     if script_path="$(___x_cmd_pkg___get_script_path "$name" "$version" "$osarch" activate)"; then
         pkg:debug "Activate running $script_path for $name $version"
-        . "${script_path}" $@
+        . "${script_path}" "$@"
     else
         ___x_cmd_pkg_activate___min_default "$name" "$version"
     fi
