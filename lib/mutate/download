@@ -85,11 +85,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
     if [ ! -f "$target/$exe" ]; then
         pkg:info "Downloading static-build: $repo/$app/$version/$exe.7z to $target"
         if ! ___x_cmd_httpget_gitx static-build "${repo}" main "$app/$version/$exe.7z" "$target/$exe.7z"; then
-            if [ "$HTTP_CODE" = "403" ]; then
-                pkg warn " Fail to retrieve file from Gitee "
-            else
-                pkg:warn "Download failure: $repo/main $app/$version/$exe.7z. Perhaps platform unsupported."
-            fi
+            pkg:warn "Download failure: $repo/main $app/$version/$exe.7z. Perhaps platform unsupported."
             x rmrf "$target"
             return 1
         fi
