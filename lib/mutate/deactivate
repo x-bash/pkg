@@ -20,7 +20,7 @@ A
 
     [ -n "$version" ] || return
 
-    local osarch="${3:-${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}}"
+    local osarch="${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}"
     local script_path
     if script_path="$(___x_cmd_pkg___get_script_path "$name" "$version" "$osarch" deactivate)"; then
         pkg:debug "Deactivate running $script_path for $name $version"
