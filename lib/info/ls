@@ -36,12 +36,21 @@ ___x_cmd_pkg_ls___installed()(
 )
 
 ___x_cmd_pkg_ls_installed(){
-    IFS="
-"
-    local name
-    printf "%s\n" "$*" | while read -r name; do
-    ___x_cmd_pkg_ls___installed | awk -v name=$name 'match($0,name){print $0}'
-    done
+#     IFS="
+# "
+#     local name
+#     printf "%s\n" "$*" | while read -r name; do
+#     ___x_cmd_pkg_ls___installed | awk -v name=$name 'match($0,name){print $0}'
+#     done
+    local name="$*"
+    ___x_cmd_pkg_ls___installed | awk -v name=$name '
+    {
+        candidatelen = split(name,candidate," ")
+         for(i = 1; i <= candidatelen; ++i ){
+             if(match($0,candidate[i])){print $0}
+         }
+    }
+    '
 }
 
 
