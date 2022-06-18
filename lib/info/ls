@@ -6,14 +6,14 @@ ___x_cmd_pkg_ls(){
         i|installed)      shift;  ___x_cmd_pkg_ls_installed "$@" ;;
         a|activated)      shift;  ___x_cmd_pkg_ls_activated "$@" ;;
         A|all)            shift;  ___x_cmd_pkg_ls_all "$@" ;;
-        *)                ___x_cmd_pkg_ls_installed "$@" ;;
+        *)                ___x_cmd_pkg_ls___installed "$@" ;;
     esac
 }
 
 
 # Invoked pkg ls installed
 # TODO: efficiency defect
-___x_cmd_pkg_ls_installed()(
+___x_cmd_pkg_ls___installed()(
     [ -d "$___X_CMD_PKG_INSTALL_PATH" ] || return 0
     osarch="$(___x_cmd_pkg_osarch)"
     locate_list="$(___x_cmd_pkg_ll)"
@@ -34,6 +34,16 @@ ___x_cmd_pkg_ls_installed()(
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
 
 )
+
+___x_cmd_pkg_ls_installed(){
+    IFS="
+"
+    local name
+    printf "%s\n" "$*" | while read -r name; do
+    ___x_cmd_pkg_ls___installed | awk -v name=$name 'match($0,name){print $0}'
+    done
+}
+
 
 # Invoked pkg ls activated: check environment variable...
 ___x_cmd_pkg_ls_activated(){
