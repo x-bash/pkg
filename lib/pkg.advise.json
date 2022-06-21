@@ -12,7 +12,7 @@
         "all|A": {
             "#desc": "List all deactivated language or application",
             "#n": {
-                "#exec": "___x_cmd_pkg_all_candidate_advise_ls"
+                "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
             }
         }
     },
@@ -25,7 +25,7 @@
     "default_version": {
         "#desc": "Display default version of language and application",
         "#1": {
-            "#exec": "___x_cmd_pkg_all_candidate_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         }
     },
 
@@ -34,55 +34,55 @@
     "download": {
         "#desc": "Download language or application package",
         "#1": {
-            "#exec": "___x_cmd_pkg_all_candidate_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         },
         "#2": {
-            "#ecec": "___x_cmd_pkg_ls_remote_version_advise_ls"}
+            "#ecec": "___x_cmd_pkg___advise_ls_remote_version"}
     },
     "install": {
         "#desc": "Download and unpack candidate",
         "#1": {
-            "#exec": "___x_cmd_pkg_all_candidate_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg_ls_remote_version_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_remote_version"
         }
     },
     "uninstall": {
         "#desc": "Uninstall language or application",
         "#1": {
-            "#exec": "___x_cmd_pkg_installed_name_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg_ls_local_version_advise_ls"
+            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
         }
     },
     "reinstall":{
         "#desc": "Reuninstall language or application",
         "#1": {
-            "#desc": "___x_cmd_pkg_installed_name_advise_ls"
+            "#desc": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#desc": "___x_cmd_pkg_ls_local_version_advise_ls"
+            "#desc": "___x_cmd_pkg___adivse_ls_local_version"
         }
     },
 
     "activate": {
         "#desc": "Activate language or application",
         "#1": {
-            "#1": "___x_cmd_pkg_installed_name_advise_ls"
+            "#1": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg_ls_local_version_advise_ls"
+            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
         }
     },
     "deactivate": {
         "#desc": "Deactivate language or application",
         "#1": {
-            "#exec": "___x_cmd_pkg_installed_name_advise_ls"
+            "#exec": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg_ls_local_version_advise_ls"
+            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
         }
     },
 
@@ -90,19 +90,19 @@
         "init" : {
             "#desc": "generate a function and use candidate through this function",
             "#1": {
-                "#exec": "___x_cmd_pkg_installed_name_advise_ls"
+                "#exec": "___x_cmd_pkg___advise_ls_installed_name"
             },
             "#2": {
-                "#exec": "___x_cmd_pkg_ls_local_version_advise_ls"
+                "#exec": "___x_cmd_pkg___adivse_ls_local_version"
             }
         },
         "path": {
             "#desc": "Display bin path",
             "#1": {
-                "#exec": "___x_cmd_pkg_installed_name_advise_ls"
+                "#exec": "___x_cmd_pkg___advise_ls_installed_name"
             },
             "#2": {
-                "#exec": "___x_cmd_pkg_ls_local_version_advise_ls"
+                "#exec": "___x_cmd_pkg___adivse_ls_local_version"
             }
         }
     }
