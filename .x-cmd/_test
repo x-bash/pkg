@@ -37,4 +37,4 @@ xrc pkg
 # time (x pkg default_version java)
 # ___x_cmd_pkg___attr_code fd v8.3.2 win/x64 xbin
 # ___x_cmd_pkg___attr_code fd v8.3.2 win/x64 sha256
-___x_cmd_pkg___list julia 1.7.0-rc1 "" url.cn
+# ___x_cmd_pkg___list julia 1.7.0-rc1 "" url.cn
