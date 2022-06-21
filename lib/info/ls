@@ -66,17 +66,3 @@ ___x_cmd_pkg_ls_all(){
         last_version = cur_version
     }'
 }
-
-___x_cmd_pkg_rawpath_name_advise_ls()(
-    if ! [ -d "$___X_CMD_PKG_RAWPATH" ]; then return 0; fi
-    cd "$___X_CMD_PKG_RAWPATH" || exit
-    local i
-    for i in */*; do
-        printf "%s\n" "${i#*/}"
-    done
-)
-
-___x_cmd_pkg_rawpath_version_advise_ls(){
-    local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
-    ___x_cmd_pkg_ls_all "${COMP_WORDS[${candidate_idx}]}"
-}

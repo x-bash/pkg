@@ -1,0 +1,9 @@
+#!/bin/sh
+
+x advise demo - <<A
+{
+    "#1": {
+        "#exec": "___x_cmd_pkg_all_candidate_advise_ls"
+    }
+}
+A
