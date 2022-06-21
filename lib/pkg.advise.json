@@ -37,7 +37,7 @@
             "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         },
         "#2": {
-            "#ecec": "___x_cmd_pkg___advise_ls_remote_version"}
+            "#ecec": "___x_cmd_pkg___advise_ls_all_version"}
     },
     "install": {
         "#desc": "Download and unpack candidate",
@@ -45,7 +45,7 @@
             "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___advise_ls_remote_version"
+            "#exec": "___x_cmd_pkg___advise_ls_all_version"
         }
     },
     "uninstall": {
@@ -54,7 +54,7 @@
             "#exec": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
+            "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
         }
     },
     "reinstall":{
@@ -63,7 +63,7 @@
             "#desc": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#desc": "___x_cmd_pkg___adivse_ls_local_version"
+            "#desc": "___x_cmd_pkg___adivse_ls_installed_version"
         }
     },
 
@@ -73,7 +73,7 @@
             "#1": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
+            "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
         }
     },
     "deactivate": {
@@ -82,7 +82,7 @@
             "#exec": "___x_cmd_pkg___advise_ls_installed_name"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___adivse_ls_local_version"
+            "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
         }
     },
 
@@ -93,7 +93,7 @@
                 "#exec": "___x_cmd_pkg___advise_ls_installed_name"
             },
             "#2": {
-                "#exec": "___x_cmd_pkg___adivse_ls_local_version"
+                "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
             }
         },
         "path": {
@@ -102,7 +102,7 @@
                 "#exec": "___x_cmd_pkg___advise_ls_installed_name"
             },
             "#2": {
-                "#exec": "___x_cmd_pkg___adivse_ls_local_version"
+                "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
             }
         }
     }
