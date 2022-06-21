@@ -29,7 +29,9 @@
         }
     },
 
-    "ll": "Display all candidates and classification",
+    "ll": {
+        "#desc": "Display all candidates and classification"
+    },
 
     "download": {
         "#desc": "Download language or application package",
