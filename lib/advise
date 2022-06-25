@@ -5,13 +5,13 @@ ___x_cmd_pkg___advise_ls_all_candidate(){
 }
 
 ___x_cmd_pkg___advise_ls_all_version(){
-    local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
-    x pkg ls all "${COMP_WORDS[candidate_idx]}"
+    local candidate_idx="${1-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
+    ___x_cmd_pkg_ls_all "${COMP_WORDS[candidate_idx]}"
 }
 
 ___x_cmd_pkg___adivse_ls_installed_version(){
     local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
-    x pkg ls i "${COMP_WORDS[candidate_idx]}"
+    ___x_cmd_pkg___advise_local_version "${COMP_WORDS[candidate_idx]}"
 }
 
 ___x_cmd_pkg___advise_ls_installed_name()(
@@ -26,4 +26,9 @@ ___x_cmd_pkg___advise_ls_installed_name()(
 ___x_cmd_pkg___advise_ls_rawpath_version(){
     local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
     ___x_cmd_pkg_ls_all "${COMP_WORDS[${candidate_idx}]}"
+}
+
+___x_cmd_pkg___advise_local_version(){
+    local "candidate=${1:-""}"
+    ls "$___X_CMD_PKG_INSTALL_PATH"/"$candidate"
 }
