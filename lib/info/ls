@@ -39,20 +39,7 @@ ___x_cmd_pkg_ls_installed(){
     local i; for i in "$@"; do
         ___x_cmd_pkg___ls___install "$i"
     done
-    # local name="$*"
-    # # [ -n "$name" ] || ___x_cmd_pkg_ls___installed
-    # if  [ -n "$name" ]; then
-    #     ___x_cmd_pkg_ls___installed | awk -v name=$name '
-    #     {
-    #         candidatelen = split(name,candidate," ")
-    #          for(i = 1; i <= candidatelen; ++i ){
-    #              if(match($0,candidate[i])){print $0}
-    #          }
-    #     }
-    #     '
-    # else
-    #     ___x_cmd_pkg_ls___installed
-    # fi
+
 }
 
 ___x_cmd_pkg___ls___install(){
