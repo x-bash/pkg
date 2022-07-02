@@ -54,7 +54,7 @@ ___x_cmd_pkg_download(){
         ! ___x_cmd_pkg_download___check_hashsum "$ball" "$md5" "$sha1" "$sha256" "$sha512" || return 0
 
         pkg:warn "File corrupted."
-        # x rmrf "$ball"
+        x rmrf "$ball"
         return 1
     done <<A
 $url_list

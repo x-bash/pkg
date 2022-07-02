@@ -44,7 +44,7 @@
             "#exec": "___x_cmd_pkg___advise_ls_all_candidate"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___advise_ls_all_version"
+            "#cand": "___x_cmd_pkg___advise_ls_all_version"
         }
     },
     "uninstall": {
