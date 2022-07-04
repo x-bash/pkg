@@ -35,7 +35,7 @@ ___x_cmd_pkg_ls___installed()(
 )
 
 ___x_cmd_pkg_ls_installed(){
-     local name="$1"
+    local name="$1"
     # [ -n "$name" ] || ___x_cmd_pkg_ls___installed
     if  [ -n "$name" ]; then
         ___x_cmd_pkg_ls___installed | awk -v name=$name '
