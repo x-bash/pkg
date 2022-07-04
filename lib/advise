@@ -31,16 +31,26 @@ ___x_cmd_pkg___advise_local_version(){
 
 
 ___x_cmd_pkg___advise_get_help_doc(){
-    cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
+    subcmd=$(cat /home/mnnna/work/pkg/lib/pkg.advise.json | x ja 'D==2{print juq(K)"\n"}' | sort -u)
+    cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk -v subcmd=$subcmd "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
     BEGIN{
+        # sublen = split(subcmd,subarr,"\n")
+        # for(z = 1; z <= sublen; ++z){
+        #     if(match(subarr[z],"#")){delete subarr[z]; count++}
+        # }
 
     }
     {
+        sublen = split(subcmd,subarr,"\n")
+        for(z = 1; z <= sublen; ++z){
+            if(match(subarr[z],"#")){delete subarr[z]; count++}
+        }
+
         if ($0 != "") objlen = json_split2tokenarr(objarr, $0);
         for (i=1; i<=objlen; ++i){
             line =advise_json2help(objarr,objlen,i)
         }
-        uniq(line)
+        uniq(line,subarr)
     }
 
 function advise_json2help(objarr,objlen,i,     tmp, _arr){
@@ -64,99 +74,48 @@ function advise_json2help(objarr,objlen,i,     tmp, _arr){
         return k
 }
 
-function uniq(k,v){
+function uniq(k,subarr,  current){
     current = k
-    if ( k != last_version && k != "")  handledata(current)
+    if ( k != last_version && k != "")  handledata(current,subarr)
     last_version =  current
 }
 
-function handledata(data,arr,len){
-    # if (! match(data, "#")){
-    #     if ((match(data,"|"))){
-    #         len = split(data,arr,",")
-    #         print "       "arr[1] "   ""<candidate>""   " arr[len]
-    #     }else
-    #         split(data,arr,",")
-    #         print arr[1] "     " jqu(arr[2])
-    # }
-    # if (match(data,"#1")){
-    #     len = split(data, arr, "#1")
-    #     print arr[1] "   ""<candidate>""   " arr[len]
-    # }
-    # if (match(data,"#2")){
-    #     len = split(data, arr, "#2")
-    #     print arr[1] "   " "<candidate>" "   " "<version>" "  " arr[len]
-    # }
-    # gsub(SUBSEP,"    ",data)
-    gsub("#1","<candidate>",data)
-    gsub("#2","<version>",data)
+function handledata(data,subarr,           arr,len,arrl){
 
-    format(data)
+    gsub("#1"," <candidate> ",data)
+    gsub("#2"," <version> ",data)
+
+    format(data,subarr)
 }
 
-function format(data,_arr,i , j, spcae, complete, len){
-    # for(i=0; i < 20; ++i){
-    #     space = space " "
-    # }
-    gsub("\t","",data)
-    split(data, _arr , "\"")
-    if( length(_arr[1]) < 80 ){
-        len = 80 - length(_arr[1])
-        for(i = length(_arr[1]); i <80; ++i){
+function format(data,subarr,          _arr,i , j, spcae, complete, len){
+    split( data, _arr, "\034" )
+    for( _i in subarr){
+
+        if ( _arr[1] == subarr[ _i ]){
+            data = "<SUMCMD>" data "<color>"
+        }
+    }
+    split( data, _arr , "\"")
+
+
+    gsub( "\t" ,"" ,data )
+    # split( data, _arr , "\"")
+
+    if( length(_arr[ 1 ]) < 80 ){
+
+        len = 80 - length(_arr[ 1 ] )
+
+        for( i = length( _arr[ 1 ] ); i < 80; ++i ){
             complete = complete  " "
         }
-        data = _arr[1] complete jqu(_arr[2])
-        if(_arr[2] != "")print data
+        data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
+        gsub("\034", "",data)
+        gsub("<SUMCMD>", "    ",data)
+        gsub("<color>", "",data)
+        if( _arr[ 2 ] != "")print data"\n"
         complete = ""
     }
 }
     '
 }
-
-
-
-
-
-
-
-
-# ___x_cmd_pkg___advise_get_help_doc(){
-#     cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
-#     {
-#          if ($0 != "") jiparse_after_tokenize(obj, $0)
-#         advise_json2help(obj)
-#     }
-# function advise_json2help(obj){
-#     obj_prefix = SUBSEP "\"1\""
-#     len = obj[obj_prefix L]
-#     for (i = 1; i< len; ++i) print obj[obj_prefix i]
-#     print len
-# }
-#     '
-#  }
-
-# ___x_cmd_advise_get_help(){
-#     local filePath="${1:?"Provide advise json path"}"; [ "$#" -gt 0 ] && shift
-#     local IFS
-#     IFS="$(printf "\002")"
-#     local s="$*"
-#     if [ -f "$filePath" ]; then
-#         ___x_cmd_advise_get_complete "$filePath" "$s" | awk "$(xrc cat awk/lib/default.awk)"'
-#         {
-#             $0 = juq($0)
-#             _idx = index($0, ":")
-#             if (_idx != 0) {
-#                 _desc = substr($0, _idx+1)
-#                 _str = arr[ _desc ]
-#                 arr[ _desc ] = (_str != "") ? _str "|" substr($0, 1, _idx-1) : substr($0, 1, _idx-1)
-#                 _l = length( arr[_desc] )
-#                 arr_len[ _desc ] = _l
-#                 if (_l > MAX_LEN) MAX_LEN = _l
-#             }
-#         }
-#         END{
-#             for ( i in arr ) print "    " arr[i]  sprintf("%" MAX_LEN - arr_len[ i ] "s", "") "  " i
-#         }
-#         '
-#     fi
-# }
