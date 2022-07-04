@@ -31,7 +31,7 @@ ___x_cmd_pkg(){
         ""|--help|-h)           cat "$___X_CMD_ROOT_MOD/pkg/lib/help.txt" >&2; return 0 ;;
         _x_cmd_advise_json)     cat "$___X_CMD_ROOT_MOD/pkg/lib/pkg.advise.json"        ;;
 
-        *)              return 1
+        *)                      printf "%s" "Not found command: x pkg $1" && return 1
     esac
 }
 
