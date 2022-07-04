@@ -32,17 +32,9 @@ ___x_cmd_pkg_ls___installed()(
         -f "$___X_CMD_ROOT_MOD/awk/lib/str.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
-
 )
 
 ___x_cmd_pkg_ls_installed(){
-    local i; for i in "$@"; do
-        ___x_cmd_pkg___ls___install "$i"
-    done
-
-}
-
-___x_cmd_pkg___ls___install(){
     local name="$1"
     # [ -n "$name" ] || ___x_cmd_pkg_ls___installed
     if  [ -n "$name" ]; then
@@ -88,4 +80,9 @@ ___x_cmd_pkg_ls_all(){
         if ( juq(O[1]) != last_version) print cur_version
         last_version = cur_version
     }'
+}
+
+___x_cmd_pkg_ls___all_candidate(){
+    # TODO: Use find to avoid awk
+    ls "$___X_CMD_PKG_RAWPATH"/*/ | awk '{if(($0 != "") && (! match($0, /^\/[..]*/))){print $0}}'
 }
