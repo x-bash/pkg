@@ -60,12 +60,13 @@ ___x_cmd_pkg_xbin_init(){
     }
 
     local bin_mod_func_name="${3:-___x_cmd_${bin_mod_name}}"
+    local bin_mod_path_name="${4}"
     eval "
         $bin_mod_func_name(){
             $bin_path \"\$@\"
         }
-        if [ -n \"\$4\" ]; then
-            $4=\"$bin_path\"
+        if [ -n \"\$bin_mod_path_name\" ]; then
+            $bin_mod_path_name=\"$bin_path\"
         fi
     "
 
