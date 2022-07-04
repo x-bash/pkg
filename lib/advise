@@ -31,14 +31,10 @@ ___x_cmd_pkg___advise_local_version(){
 
 
 ___x_cmd_pkg___advise_get_help_doc(){
+    xrc ui
     subcmd=$(cat /home/mnnna/work/pkg/lib/pkg.advise.json | x ja 'D==2{print juq(K)"\n"}' | sort -u)
-    cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk -v subcmd=$subcmd "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
+    cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk -v subcmd=$subcmd -v LINES=$LINES -v COLUMNS=$COLUMNS "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
     BEGIN{
-        # sublen = split(subcmd,subarr,"\n")
-        # for(z = 1; z <= sublen; ++z){
-        #     if(match(subarr[z],"#")){delete subarr[z]; count++}
-        # }
-
     }
     {
         sublen = split(subcmd,subarr,"\n")
@@ -102,7 +98,7 @@ function format(data,subarr,          _arr,i , j, spcae, complete, len){
     gsub( "\t" ,"" ,data )
     # split( data, _arr , "\"")
 
-    if( length(_arr[ 1 ]) < 80 ){
+    if( length(_arr[ 1 ]) < COLUMNS ){
 
         len = 80 - length(_arr[ 1 ] )
 
@@ -111,8 +107,8 @@ function format(data,subarr,          _arr,i , j, spcae, complete, len){
         }
         data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
         gsub("\034", "",data)
-        gsub("<SUMCMD>", "    ",data)
-        gsub("<color>", "",data)
+        gsub("<SUMCMD>", "\t",data)
+        gsub("<color>", "        ",data)
         if( _arr[ 2 ] != "")print data"\n"
         complete = ""
     }
