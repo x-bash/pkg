@@ -13,7 +13,7 @@ ___x_cmd_pkg_xbin(){
 
 ___x_cmd_pkg_xbin_path(){
     local pkg_name="${1:?Provide pkg name}"
-    local version="${2:?Provide version}"
+    local version="${2:-$(___x_cmd_pkg_default_version "${pkg_name}")}"
 
     pkg:debug "INSTALL_PATH: $___X_CMD_PKG_INSTALL_PATH/$pkg_name/$version"
 
@@ -64,6 +64,9 @@ ___x_cmd_pkg_xbin_init(){
         $bin_mod_func_name(){
             $bin_path \"\$@\"
         }
+        if [ -n \"\$4\" ]; then
+            $4=\"$bin_path\"
+        fi
     "
 
 }
