@@ -28,11 +28,14 @@ ___x_cmd_pkg___advise_local_version(){
     candidate_exec_arr=( $(ls "$___X_CMD_PKG_INSTALL_PATH"/"$candidate"))
 }
 
-___x_cmd_pkg___deactivte_candidate(){
+# ___x_cmd_pkg___deactivte_candidate(){
+#     candidate_exec_arr=($(printf "$___X_CMD_PKG_ACTIVATE___LIST" | awk '{split($0,a,"\n\n");for(i in a){gsub("="," ",a[i]);print a[i]} }'))
+# }
+___x_cmd___pkg_advise___deactivte_candidate(){
     candidate_exec_arr=($(printf "$___X_CMD_PKG_ACTIVATE___LIST" | awk '{split($0,a,"\n\n");for(i in a){split(a[i],b,"=");print b[1]} }'))
 }
 
-___x_cmd_pkg___deactivte_version(){
+___x_cmd___pkg_advise___deactivte_version(){
     local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
     candidate_exec_arr=(  $(
         printf "$___X_CMD_PKG_ACTIVATE___LIST" | awk -v candidate="${COMP_WORDS[candidate_idx]}" '
@@ -41,7 +44,7 @@ ___x_cmd_pkg___deactivte_version(){
             for(i in a){
                 split(a[i],b,"=")
                 if(match(candidate,b[1])){
-                    print b[2]
+                    print b[2]              x
                 }
             }
         }'
