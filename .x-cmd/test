@@ -2,7 +2,23 @@ xws install
 ___X_CMD_XRC_MODULE_IMPORTED=
 ___x_cmd_advise rm ___x_cmd_pkg
 xrc pkg
+x log init pkg_test
 
+# get the list of candidate
+
+while read -r candidate; do
+    pkg_test:info "== $candidate =="
+
+    while read -r version; do
+        printf "$version "
+    done <<A
+$(___x_cmd_pkg_ls_all "$candidate" ; echo "$?")
+A
+    printf "\n"
+
+done <<A
+$(___x_cmd_pkg_ls___all_candidate)
+A
 
 # ___x_cmd_pkg___attr_code java "" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" hook.setup
 # ___x_cmd_pkg___all_info java "18-open" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" "install"

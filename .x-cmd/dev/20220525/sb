@@ -17,9 +17,9 @@ static_build_which(){
     mkdir -p "$target"
 
     local arch
-    arch="$(os arch)"
+    arch="$(___x_cmd_os arch)"
     local osname
-    osname="$(os name)"
+    osname="$(___x_cmd_os name)"
 
     local exe
     case "$osname" in

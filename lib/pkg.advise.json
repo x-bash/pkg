@@ -1,6 +1,6 @@
 {
     "ls": {
-        "#desc": "List candidate and version",
+        "#desc": "List candidate and version  46rg41 r86g41th8 6w4t1 h6tw 4ht3h 4tw83h wt4wh w84 1h835s84t8 h4s635t4t6 4rn3 sn4 srn4h5rs4 1ht6h 4rt+e64h1tr+ 4jh+yj8j4u9k7t8 j+k74uy+k7 yi+84t8i ",
         "installed|i": {
             "#desc" : "Display installed language or application",
             "#n":{
@@ -77,10 +77,10 @@
     "deactivate": {
         "#desc": "Deactivate language or application",
         "#1": {
-            "#exec": "___x_cmd_pkg___advise_ls_installed_name"
+            "#exec": "___x_cmd_pkg___advise_deactivte_candidate"
         },
         "#2": {
-            "#exec": "___x_cmd_pkg___adivse_ls_installed_version"
+            "#exec": "___x_cmd_pkg___advise_deactivte_version"
         }
     },
 

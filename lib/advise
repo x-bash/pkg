@@ -1,7 +1,7 @@
 # shellcheck shell=sh disable=SC2039,SC1090,SC3043,SC2263    # xrc
 
 ___x_cmd_pkg___advise_ls_all_candidate(){
-    candidate_exec_arr=( $(ls "$___X_CMD_PKG_RAWPATH"/*/ | awk '{if(($0 != "") && (! match($0, /^\/[..]*/))){print $0}}'))
+    candidate_exec_arr=( $(___x_cmd_pkg_ls___all_candidate))
 }
 
 ___x_cmd_pkg___advise_ls_all_version(){
@@ -16,7 +16,6 @@ ___x_cmd_pkg___adivse_ls_installed_version(){
 
 ___x_cmd_pkg___advise_ls_installed_name(){
     candidate_exec_arr=($(ls "$___X_CMD_PKG_INSTALL_PATH" | awk '{split($0,a," "); for(i in a)print a[i]}'))
-
 }
 
 ___x_cmd_pkg___advise_ls_rawpath_version(){
@@ -27,6 +26,26 @@ ___x_cmd_pkg___advise_ls_rawpath_version(){
 ___x_cmd_pkg___advise_local_version(){
     local "candidate=${1:-""}"
     candidate_exec_arr=( $(ls "$___X_CMD_PKG_INSTALL_PATH"/"$candidate"))
+}
+
+___x_cmd_pkg___advise_deactivte_candidate(){
+    candidate_exec_arr=($(printf "$___X_CMD_PKG_ACTIVATE___LIST" | awk '{split($0,a,"\n\n");for(i in a){split(a[i],b,"=");print b[1]} }'))
+}
+
+___x_cmd_pkg___advise_deactivte_version(){
+    local candidate_idx="${1:-2}"; [ -z "$ZSH_VERSION" ] || candidate_idx=$((candidate_idx+1))
+    candidate_exec_arr=(  $(
+        printf "$___X_CMD_PKG_ACTIVATE___LIST" | awk -v candidate="${COMP_WORDS[candidate_idx]}" '
+        {
+            split( $0, a, "\n\n" )
+            for(i in a){
+                split(a[i],b,"=")
+                if(match(candidate,b[1])){
+                    print b[2]              
+                }
+            }
+        }'
+    ))
 }
 
 
@@ -84,7 +103,7 @@ function handledata(data,subarr,           arr,len,arrl){
     format(data,subarr)
 }
 
-function format(data,subarr,          _arr,i , j, spcae, complete, len){
+function format(data,subarr,          _arr,i , j, spcae, complete, len, line,newdesc){
     split( data, _arr, "\034" )
     for( _i in subarr){
 
@@ -105,12 +124,47 @@ function format(data,subarr,          _arr,i , j, spcae, complete, len){
         for( i = length( _arr[ 1 ] ); i < 80; ++i ){
             complete = complete  " "
         }
-        data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
-        gsub("\034", "",data)
-        gsub("<SUMCMD>", "\t",data)
-        gsub("<color>", "        ",data)
-        if( _arr[ 2 ] != "")print data"\n"
-        complete = ""
+
+    if (length( _arr[2]) + 80 > COLUMNS){
+        lines = length(_arr[ 2 ])/(COLUMNS - 80 )
+        if( lines > int(lines)){ lines = int(lines) + 1 }
+# print lines
+# print "000" _arr[2] "000"
+        desclength = COLUMNS -80
+        # for (_k = 1; _k <= lines; _k++){
+        #     if(_k == 1){
+        #         ndesc = substr(_arr[2], 0,COLUMNS-1)
+        #         indexnum = index(_arr[2],newdesc)
+        #         newdesc = newdesc ndesc
+        #     }else if(_k > 1 && k < lines){
+        #         ndesc = substr(_arr[2], 0, COLUMNS-80)
+        #         indexnum = index(_arr[2],newdesc)
+        #         newdesc = newdesc "             "  ndesc
+        #     }else{
+        #         ndesc = substr(_arr[2], indexnum)
+        #         newdesc = newdesc "             "  ndesc
+        #     }
+        # }
+        for (_k = 1; _k <= lines; _k++){
+                ndesc = substr(_arr[ 2 ], 0, desclength )
+                print ndesc
+                _arr[ 2 ] = substr(_arr[ 2 ],COLUMNS-80)
+                print _arr[ 2 ]
+                # indexnum = index(_arr[2],ndesc)
+                # print indexnum
+                # _arr[2] = substr(_arr[2],)
+                newdesc = newdesc ndesc
+
+        }
+        # print newdesc
+
+    }
+        # data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
+        # gsub("\034", "",data)
+        # gsub("<SUMCMD>", "\t",data)
+        # gsub("<color>", "        ",data)
+        # if( _arr[ 2 ] != "")print data"\n"
+        # complete = ""
     }
 }
     '
