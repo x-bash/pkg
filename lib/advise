@@ -41,7 +41,7 @@ ___x_cmd_pkg___advise_deactivte_version(){
             for(i in a){
                 split(a[i],b,"=")
                 if(match(candidate,b[1])){
-                    print b[2]              x
+                    print b[2]              
                 }
             }
         }'
