@@ -15,6 +15,8 @@ ___x_cmd_pkg_ls(){
 # TODO: efficiency defect
 ___x_cmd_pkg_ls___installed()(
     [ -d "$___X_CMD_PKG_INSTALL_PATH" ] || return 0
+    local osarch
+    local locate_list
     osarch="$(___x_cmd_pkg_osarch)"
     locate_list="$(___x_cmd_pkg_ll)"
     (
