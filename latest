@@ -2,7 +2,7 @@
 # shellcheck    shell=sh            disable=SC3043      # xrc
 
 x log init pkg
-xrc os advise
+xrc os
 ___x_cmd_pkg(){
     # ___x_cmd_pkg___which_p7zip || return
     local op="$1"
@@ -41,7 +41,7 @@ xrc:mod:lib     pkg \
     mutate/download     mutate/install      mutate/activate     mutate/deactivate
 
 if ___x_cmd_is_suitable_advise_env; then
-    xrc:mod:lib env     advise
+    xrc:mod:lib pkg     advise
 fi
 
 ___X_CMD_PKG_RAWPATH="$___X_CMD_ROOT_TMP/pkg/raw"
