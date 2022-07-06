@@ -41,7 +41,7 @@ ___x_cmd_pkg___advise_deactivte_version(){
             for(i in a){
                 split(a[i],b,"=")
                 if(match(candidate,b[1])){
-                    print b[2]              
+                    print b[2]
                 }
             }
         }'
@@ -54,6 +54,7 @@ ___x_cmd_pkg___advise_get_help_doc(){
     subcmd=$(cat /home/mnnna/work/pkg/lib/pkg.advise.json | x ja 'D==2{print juq(K)"\n"}' | sort -u)
     cat /home/mnnna/work/pkg/lib/pkg.advise.json | awk -v subcmd=$subcmd -v LINES=$LINES -v COLUMNS=$COLUMNS "$(xrc cat awk/lib/jiter.awk; xrc cat awk/lib/json.awk; xrc cat awk/lib/default.awk)"'
     BEGIN{
+        for (i = 1; i <= 80; i++){space = space " "}
     }
     {
         sublen = split(subcmd,subarr,"\n")
@@ -103,7 +104,7 @@ function handledata(data,subarr,           arr,len,arrl){
     format(data,subarr)
 }
 
-function format(data,subarr,          _arr,i , j, spcae, complete, len, line,newdesc){
+function format(data,subarr,          _arr,i , j, spcae, complete, len, line){
     split( data, _arr, "\034" )
     for( _i in subarr){
 
@@ -128,7 +129,7 @@ function format(data,subarr,          _arr,i , j, spcae, complete, len, line,new
     if (length( _arr[2]) + 80 > COLUMNS){
         lines = length(_arr[ 2 ])/(COLUMNS - 80 )
         if( lines > int(lines)){ lines = int(lines) + 1 }
-# print lines
+print lines
 # print "000" _arr[2] "000"
         desclength = COLUMNS -80
         # for (_k = 1; _k <= lines; _k++){
@@ -146,25 +147,33 @@ function format(data,subarr,          _arr,i , j, spcae, complete, len, line,new
         #     }
         # }
         for (_k = 1; _k <= lines; _k++){
-                ndesc = substr(_arr[ 2 ], 0, desclength )
-                print ndesc
-                _arr[ 2 ] = substr(_arr[ 2 ],COLUMNS-80)
-                print _arr[ 2 ]
+            if(_k == 1){
+                ndesc = substr(_arr[2], 0,COLUMNS)
+                newdesc = newdesc ndesc"\n" "kkkk"
+            }else if(_k > 1 && _k <= lines){
+                 ndesc = substr(_arr[2], (COLUMNS-80)*(_k-1), COLUMNS-80)
+                 newdesc = newdesc space ndesc"\n"
+            }
+            _arr[2] = newdesc
+                # ndesc = substr(_arr[ 2 ], 0, desclength )
+
+                # _arr[ 2 ] = substr(_arr[ 2 ],COLUMNS-80)
+
                 # indexnum = index(_arr[2],ndesc)
                 # print indexnum
                 # _arr[2] = substr(_arr[2],)
-                newdesc = newdesc ndesc
+                # newdesc = complete newdesc _arr[2]
 
         }
-        # print newdesc
+
 
     }
-        # data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
-        # gsub("\034", "",data)
-        # gsub("<SUMCMD>", "\t",data)
-        # gsub("<color>", "        ",data)
-        # if( _arr[ 2 ] != "")print data"\n"
-        # complete = ""
+        data = _arr[ 1 ] complete jqu( _arr[ 2 ] ) _arr[3]
+        gsub("\034", "",data)
+        gsub("<SUMCMD>", "\t",data)
+        gsub("<color>", "        ",data)
+        if( _arr[ 2 ] != "")print data"\n"
+        complete = ""
     }
 }
     '
