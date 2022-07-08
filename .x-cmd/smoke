@@ -1,0 +1,31 @@
+
+
+try_pkg(){
+    # TODO: clear up environment
+
+    local name="${1:?Provide name}"
+    local version="${2:?Provide version}"
+
+    (
+        x pkg install "$name" "$version"
+        x pkg activate "$name"
+
+        x pkg _test "$name"
+    )
+}
+
+smoke(){
+    local name; local version
+    local IFS; while read -r name version; do
+        try_pkg "$name" "$version"
+    done <<A
+jq
+yq
+fd
+rg
+ffmpeg
+A
+
+}
+
+smoke
