@@ -22,7 +22,7 @@ rg 13.0.0
 ffmpeg N-105323-gdd17c86aa1-tessus
 "
 
-    local IFS="  "
+    local IFS=" "
     local name; local version
     printf "%s" "$appandversion" |  while read -r name version; do
         try_pkg "$name" "$version"
