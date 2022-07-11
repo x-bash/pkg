@@ -10,25 +10,23 @@ try_pkg(){
         x pkg install "$name" "$version"
         x pkg activate "$name"
 
-        ___x_cmd_pkg__smoke "$name"
+        x pkg _smoke "$name"
     )
 }
 
 smoke(){
-appandversion="jq 1.6-dirty
+    local IFS=" "
+    local name; local version
+    while read -r name version; do
+        try_pkg "$name" "$version"
+    done <<A
+jq 1.6-dirty
 yq 4.15.1
 fd v8.3.2
 rg 13.0.0
 ffmpeg N-105323-gdd17c86aa1-tessus
-"
-
-    local IFS=" "
-    local name; local version
-    printf "%s" "$appandversion" |  while read -r name version; do
-        try_pkg "$name" "$version"
-    done
+A
 
 }
-
 
 smoke
