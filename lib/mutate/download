@@ -107,6 +107,7 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
                     local suffix
 
                     # TODO: using curl shared-connection facility.
+                    echo "$size" "dddd"
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
