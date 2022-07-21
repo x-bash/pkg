@@ -83,7 +83,6 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
 
     # Rely
     if [ ! -f "$target/$exe" ]; then
-        pkg:info "Downloading: $repo/$app/$version/$exe.7z to $target"
         if ! ___x_cmd_httpget_gitx static-build "${repo}" main "$app/$version/$exe.7z" "$target/$exe.7z"; then
             pkg:warn "Download failure: $repo/main $app/$version/$exe.7z. Perhaps platform unsupported."
             x rmrf "$target"
@@ -107,7 +106,6 @@ ___x_cmd_pkg_download_file___from_static_build_and_deflate(){
                     local suffix
 
                     # TODO: using curl shared-connection facility.
-                    echo "$size" "dddd"
                     for i in $(seq "$size"); do
                         # suffix="$(printf "%03s" "$i")" # Not work in gnu bash
                         suffix="$(printf "%3s" "$i" | tr " " 0)"
