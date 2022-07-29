@@ -7,10 +7,11 @@ try_pkg(){
     local version="${2:?Provide version}"
 
     (
+        x pkg uninstall "$name"
         x pkg install "$name" "$version"
         x pkg activate "$name"
-
         x pkg _smoke "$name"
+        x pkg uninstall "$name"
     )
 }
 
@@ -55,8 +56,8 @@ tig 2.5.5
 tmux 3.2a
 ucloud 0.1.38
 zellij v0.30.0
-bandwich 0.20.0
-nact 7.92
+bandwhich 0.20.0
+ncat 7.92
 nping 7.92
 openssl 3.0.0
 traceroute 5.0.1
