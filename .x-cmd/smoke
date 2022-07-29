@@ -7,10 +7,11 @@ try_pkg(){
     local version="${2:?Provide version}"
 
     (
+        x pkg uninstall "$name"
         x pkg install "$name" "$version"
         x pkg activate "$name"
-
         x pkg _smoke "$name"
+        x pkg uninstall "$name"
     )
 }
 
