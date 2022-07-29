@@ -56,8 +56,8 @@ tig 2.5.5
 tmux 3.2a
 ucloud 0.1.38
 zellij v0.30.0
-bandwich 0.20.0
-nact 7.92
+bandwhich 0.20.0
+ncat 7.92
 nping 7.92
 openssl 3.0.0
 traceroute 5.0.1
@@ -67,3 +67,50 @@ A
 
 
 smoke
+aa(){
+while read -r name version; do
+        x pkg uninstall "$name" "$version"
+    done <<A
+jq 1.6-dirty
+yq 4.15.1
+fd v8.3.2
+rg 13.0.0
+ffmpeg N-105323-gdd17c86aa1-tessus
+deno v1.22.0
+go 1.18.2
+java 18
+julia 1.8
+kotlin 1.6.21
+lua 5.4.2
+node v18.4.0
+perl 5.34.1.1
+python py39_4.12.0
+rust 1.60.0
+scala 3.1.2
+magick 7.1.0
+sqlite3 3.36.0
+7za 16.02
+aliyun v3.0.121
+bat 0.18.2
+curl 7.83.1-DEV
+dust 0.6.0
+exa v0.10.1
+fzf 0.30.0
+gh 2.13.0
+helm v3.9.0
+mosquitto 2.0.1
+procs 0.11.9
+qrencode 4.1.1
+terraform 1.2.2
+tig 2.5.5
+tmux 3.2a
+ucloud 0.1.38
+zellij v0.30.0
+bandwhich 0.20.0
+ncat 7.92
+nping 7.92
+openssl 3.0.0
+traceroute 5.0.1
+A
+
+}
