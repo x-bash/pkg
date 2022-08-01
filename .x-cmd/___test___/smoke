@@ -1,16 +1,14 @@
 
 
 try_pkg(){
-    # TODO: clear up environment
-
     local name="${1:?Provide name}"
     local version="${2:?Provide version}"
 
     (
-        x pkg uninstall "$name"
-        x pkg install "$name" "$version"
-        x pkg activate "$name"
-        x pkg _smoke "$name"
+        x pkg uninstall "$name" && \
+        x pkg install "$name" "$version" && \
+        x pkg activate "$name" && \
+        x pkg _smoke "$name" && \
         x pkg uninstall "$name"
     )
 }
@@ -19,7 +17,8 @@ smoke(){
     local IFS=" "
     local name; local version
     while read -r name version; do
-        try_pkg "$name" "$version"
+        @info "Testing $name $version"
+        try_pkg "$name" "$version" || return 1
     done <<A
 jq 1.6-dirty
 yq 4.15.1
