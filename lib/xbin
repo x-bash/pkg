@@ -22,6 +22,7 @@ ___x_cmd_pkg_xbin_path(){
         -v BIN_MOD_NAME="${bin_mod_name:-$pkg_name}" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/default.awk" \
         -f "$___X_CMD_ROOT_MOD/awk/lib/jqparse.awk" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/json.awk"   \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg._.awk" \
         -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.xbin.awk"
