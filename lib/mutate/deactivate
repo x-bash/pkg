@@ -19,7 +19,7 @@ $___X_CMD_PKG_ACTIVATE___LIST
 A
 
     if [ -z "$version" ]; then
-        pkg:error "$name had been deactivated"
+        pkg:warn "$name had been deactivated"
         return 1
     fi
 
@@ -27,9 +27,11 @@ A
     local script_path
     if script_path="$(___x_cmd_pkg___get_script_path "$name" "$version" "$osarch" deactivate)"; then
         pkg:debug "Deactivate running $script_path for $name $version"
-        . "${script_path}"
+        . "${script_path}" || {
+             pkg:error "Source $script_path failed" ; return 1
+        }
     else
-        ___x_cmd_pkg_deactivate___min_default "$name" "$version"
+        ___x_cmd_pkg_deactivate___min_default "$name" "$version" || return 1
     fi
 
     local tmp="${___X_CMD_PKG_ACTIVATE___LIST#*

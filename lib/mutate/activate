@@ -10,7 +10,7 @@ ___x_cmd_pkg_activate___min(){
     local tmp="${___X_CMD_PKG_ACTIVATE___LIST#*"$name=$version"}"
 
     if ! [ "$tmp" = "$___X_CMD_PKG_ACTIVATE___LIST" ]; then
-        pkg:debug "$name had been activated"
+        pkg:warn "$name had been activated"
         return
     fi
 
@@ -18,10 +18,12 @@ ___x_cmd_pkg_activate___min(){
 
     if [ -z "$script_path" ] && \
         ! script_path="$(___x_cmd_pkg___get_script_path "$name" "$version" "${___X_CMD_PKG_OSARCH:-$(___x_cmd_pkg_osarch)}" activate)"; then
-            ___x_cmd_pkg_activate___min_default "$name" "$version"
+            ___x_cmd_pkg_activate___min_default "$name" "$version" || return 1
     else
         pkg:debug "Activate running $script_path for $name $version"
-        . "${script_path}" || return 1
+        . "${script_path}" || {
+             pkg:error "Source $script_path failed" ; return 1
+        }
     fi
 
     ___X_CMD_PKG_ACTIVATE___LIST="$___X_CMD_PKG_ACTIVATE___LIST
