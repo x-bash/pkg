@@ -22,7 +22,9 @@ ___x_cmd_pkg_install(){
         local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version.$file_suffix"
         pkg:info "Running $script_path after download $name $version"
         pkg:debug "name: $name version: $version osarch: $osarch file_suffix: $file_suffix ball: $ball bin_path: $bin_path"
-        . "$script_path" || pkg:error "Source $script_path failed" ; return 1
+        . "$script_path" || {
+            pkg:error "Source $script_path failed" ; return 1
+            }
         return 0
     else
         local sb_repo sb_app
@@ -49,13 +51,17 @@ ___x_cmd_pkg_install(){
 
     if [ -e "$ball" ]; then
         pkg:info "Remove $ball"
-        x rmrf "$ball" || pkg:error "Remove $ball failed "; return 1
+        x rmrf "$ball" || {
+            pkg:error "Remove $ball failed "; return 1
+        }
     fi
     if ! [ -d "$install_path" ];then
         pkg:warn "This $name $version is no exist."
     else
         pkg:info "Uninstalling $name $version"
-        x rmrf "$install_path" || pkg:error "Remove $install_path failed "; return 1
+        x rmrf "$install_path" || {
+            pkg:error "Remove $install_path failed "; return 1
+        }
     fi
  }
 
@@ -72,7 +78,9 @@ ___x_cmd_pkg_reinstall(){
     pkg:debug "ball: $ball"
     if [ -f "$ball" ]; then
         pkg:info "Delete $ball and reinstall $name $version"
-        x rmrf "$ball" || pkg:error "Remove $ball failed" ; return 1
+        x rmrf "$ball" || {
+            pkg:error "Remove $ball failed" ; return 1
+        }
     fi
     ___x_cmd_pkg_install "$@" || return 1
     # Delete the installation. Re unpack or running the installation script ?
@@ -103,11 +111,19 @@ ___x_cmd_pkg_install___unzip(){
         x uz "$ball" "$unpack_dir" 1>/dev/null || {
             pkg:error "Fail to unzip $ball" ; return 1
         }
-        x rmrf "$tgt" || pkg:error "Remove $tgt failed "; return 1
-        mkdir -p "$tgt" || pkg:error "create $tgt directory failed"; return 1
+        x rmrf "$tgt" || {
+            pkg:error "Remove $tgt failed "; return 1
+        }
+        mkdir -p "$tgt" || {
+            pkg:error "create $tgt directory failed"; return 1
+        }
         pkg:debug "Moving $unpack_dir to $tgt"
-        mv -f "$unpack_dir"/*/* "$tgt" || pkg:error "Moved file of $unpack_dir to $tgt failed" ; return 1
-        x rmrf "$unpack_dir" || pkg:error "Remove $ball failed" ; return 1
+        mv -f "$unpack_dir"/*/* "$tgt" || {
+            pkg:error "Moved file of $unpack_dir to $tgt failed" ; return 1
+        }
+        x rmrf "$unpack_dir" || {
+            pkg:error "Remove $ball failed" ; return 1
+        }
     else
         pkg:info "Unpack: $ball to $tgt"
         x uz "$ball" "$tgt"  || {

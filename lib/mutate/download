@@ -16,7 +16,9 @@ ___x_cmd_pkg_download(){
     local sb_app
     ___x_cmd_pkg___static_build_attr "$name" "$version" "$osarch"
     if [ -n "$sb_repo" ] && [ -n "$sb_app" ]; then
-        ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app" "$version" || pkg:error "Download static-build file failed" ; return 1
+        ___x_cmd_pkg_download_file___from_static_build_and_deflate "$sb_repo" "$sb_app" "$version" ||  {
+            pkg:error "Download static-build file failed" ; return 1
+        }
         return
     fi
 
@@ -31,7 +33,9 @@ ___x_cmd_pkg_download(){
     ___x_cmd_pkg___attr "$name" "$version" "$osarch" "md5,sha1,sha256,sha512,file_suffix"
     local url
     local ball="$___X_CMD_PKG_DOWNLOAD_PATH/$name/$version.$file_suffix"
-    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$name" || pkg:error "Create $___X_CMD_PKG_DOWNLOAD_PATH/$name failed" ; return 1
+    mkdir -p "$___X_CMD_PKG_DOWNLOAD_PATH/$name" || {
+            pkg:error "Create $___X_CMD_PKG_DOWNLOAD_PATH/$name failed" ; return 1
+        }
     pkg:debug "Download $name $version url_list: $url_list ball: $ball"
 
 
