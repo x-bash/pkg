@@ -24,7 +24,7 @@ ___x_cmd_pkg_install(){
         pkg:debug "name: $name version: $version osarch: $osarch file_suffix: $file_suffix ball: $ball bin_path: $bin_path"
         . "$script_path" || {
             pkg:error "Source $script_path failed" ; return 1
-            }
+        }
         return 0
     else
         local sb_repo sb_app
